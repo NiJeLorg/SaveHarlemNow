@@ -14,13 +14,15 @@ p {
 nav {
   height: 60px;
   background: #fff;
-  border-bottom: 1px solid #000;
   display: flex;
   justify-content: center;
   align-items: center; }
 
 .map-layer {
-  height: 94vh; }
+  position: absolute;
+  height: 94vh;
+  top: 6vh;
+  width: 100%; }
 
 .layers-holder {
   position: absolute;
