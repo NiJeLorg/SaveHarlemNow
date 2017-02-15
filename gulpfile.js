@@ -7,7 +7,8 @@ const gulp = require('gulp'),
     path = require('path'),
     paths = {
         sass: 'app/sass/**/*.scss',
-        pug: ['!app/shared/**', 'app/**/*.pug']
+        pug: ['!app/shared/**', 'app/**/*.pug'],
+        clientJS: 'public/js/**/*.js'
     };
 
 gulp.task('pug-html', function() {
@@ -24,9 +25,14 @@ gulp.task('sass-css', function() {
         .pipe(browserSync.reload({ stream: true }));
 });
 
+gulp.task('js-watch', function() {
+    browserSync.reload();
+});
+
 gulp.task('nodemon', function() {
     nodemon({
-            script: 'index.js'
+            script: 'index.js',
+            ignore: 'public/'
         })
         .on('restart', function() {
             console.log('>> node restart');
@@ -36,6 +42,7 @@ gulp.task('nodemon', function() {
 gulp.task('watch-files', function() {
     gulp.watch(paths.pug, ['pug-html']);
     gulp.watch(paths.sass, ['sass-css']);
+    gulp.watch(paths.clientJS, ['js-watch']);
 });
 
 gulp.task('browser-sync', function() {

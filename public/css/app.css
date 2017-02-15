@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  font-family: 'Avenir', sans-serif; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0; }
+
+nav {
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.map-layer {
+  height: 94vh; }
+
+.layers-holder {
+  position: absolute;
+  top: 80px;
+  right: 40px; }
