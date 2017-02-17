@@ -2,9 +2,8 @@
 const express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
-    port = 8000,
+    envVar = require('dotenv').config(),
     app = express();
-
 
 // serve static files
 app.use(express.static('public'));
@@ -20,4 +19,4 @@ app.get('/', function(req, res) {
 });
 
 // start the server
-app.listen(port);
+app.listen(envVar.parsed.PORT);
