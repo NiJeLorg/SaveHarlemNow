@@ -19,4 +19,4 @@ app.get('/', function(req, res) {
 });
 
 // start the server
-app.listen(envVar.parsed.PORT);
+app.listen(process.env.PORT || envVar.parsed.PORT);
