@@ -1,10 +1,3 @@
-.map-layer div.cartodb-share a, .map-layer div.cartodb-tiles-loader {
-  display: none !important; }
-
-body {
-  margin: 0;
-  font-family: 'Avenir', sans-serif; }
-
 h1,
 h2,
 h3,
@@ -14,20 +7,63 @@ h6,
 p {
   margin: 0; }
 
+.map-layer div.cartodb-share a, .map-layer div.cartodb-tiles-loader {
+  display: none !important; }
+
+.card, .map-layers-holder .map-layers-title, .map-layers-holder .map-layers-content .layers-choropleth-layers, .map-layers-holder .map-layers-content .layers-pointLinePolygonal-layers {
+  background: #FFF;
+  box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.3);
+  color: #1B2D41; }
+
+.map-layer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-family: 'Oxygen', sans-serif;
+  font-weight: 400;
+  border-bottom: 0.5px solid rgba(151, 151, 151, 0.3);
+  padding-top: 14px;
+  padding-bottom: 6px; }
+
+body {
+  margin: 0;
+  font-family: 'Oxygen', sans-serif; }
+
 nav {
   height: 60px;
   background: #fff;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  box-shadow: 0 4px 4px 0 rgba(186, 186, 186, 0.5); }
 
-.map-layer {
+.map-container {
   position: absolute;
   top: 60px;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  z-index: -1; }
 
-.layers-holder {
+.map-layers-holder {
+  width: 300px;
   position: absolute;
-  top: 80px;
-  right: 40px; }
+  top: 120px;
+  right: 50px;
+  z-index: 400; }
+  .map-layers-holder .map-layers-title {
+    height: 40px;
+    font-family: 'Oxygen', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .map-layers-holder .map-layers-content {
+    margin-top: 10px; }
+    .map-layers-holder .map-layers-content .layers-choropleth-layers {
+      padding: 0 10px; }
+    .map-layers-holder .map-layers-content .layers-pointLinePolygonal-layers {
+      margin-top: 15px;
+      padding: 0 10px; }
+
+/* New York City Zoning: */

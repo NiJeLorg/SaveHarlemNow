@@ -1,5 +1,9 @@
 angular.module('shnApp')
     .controller('MapCtrl', function($scope) {
+        $scope.mapLayers = {
+            choroplethLayers: ['Built FAR', 'Land Use', 'Zoning', 'Landmark Rate', 'Demographics'],
+            pointLinePolygonalLayers: ['Existing Landmarks', 'Proposed Landmarks', 'Landmarks At Risk', 'Existing Historic Districts', 'Proposed Historic Districts', 'Proposed Zoning Changes', 'NYC Community Boards', 'Transportation Infrastructure']
+        };
 
         function initMap() {
             var map = L.map('map', {

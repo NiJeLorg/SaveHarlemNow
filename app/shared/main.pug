@@ -1,7 +1,14 @@
 div(ng-controller='MapCtrl')
-  .map-layer#map
-  .layers-holder
-    .layer-title
-        h4 MAP LAYERS
-    .layers-choropleth-layers
-    .layers-other-layers
+  .map-container#map
+  .map-layers-holder
+    .map-layers-title
+        p MAP LAYERS
+    .map-layers-content
+      .layers-choropleth-layers
+        .map-layer(ng-repeat='layer in mapLayers.choroplethLayers')
+          p {{layer}}
+          input(type='checkbox')
+      .layers-pointLinePolygonal-layers
+        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalLayers')
+          p {{layer}}
+          input(type='checkbox')
