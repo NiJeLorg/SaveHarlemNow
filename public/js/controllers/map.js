@@ -29,7 +29,6 @@ angular.module('shnApp')
 
 
         $scope.getMapLayerSelected = function(layer) {
-            console.log(indexedSubLayers);
             if ($scope.selectedMapLayers[layer.modelValue] === true) {
                 for (var key in indexedSubLayers) {
                     if (indexedSubLayers[key] === layer.displayValue) {
