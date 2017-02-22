@@ -1,9 +1,48 @@
 angular.module('shnApp')
     .controller('MapCtrl', function($scope) {
         var cdb = window.cartodb;
+        $scope.selectedMapLayers = {};
+        var indexedSubLayers = {};
+        var allSubLayers = [];
+
         $scope.mapLayers = {
-            choroplethLayers: ['Built FAR', 'Land Use', 'Zoning', 'Landmark Rate', 'Demographics'],
-            pointLinePolygonalLayers: ['Existing Landmarks', 'Proposed Landmarks', 'Landmarks At Risk', 'Existing Historic Districts', 'Proposed Historic Districts', 'Proposed Zoning Changes', 'NYC Community Boards', 'Transportation Infrastructure']
+            choroplethLayers: [{
+                    displayValue: 'Built FAR',
+                    modelValue: 'builtFar'
+                },
+                { displayValue: 'Land Use', modelValue: 'landUse' },
+                { displayValue: 'Zoning', modelValue: 'zoning' },
+                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate' },
+                { displayValue: 'Demographics', modelValue: 'demographics' }
+            ],
+            pointLinePolygonalLayers: [
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks' },
+                { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks' },
+                { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk' },
+                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts' },
+                { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts' },
+                { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange' },
+                { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts' },
+                { displayValue: 'Transportation Infrastructure', modelValue: 'transportationInfrastructure' }
+            ]
+        };
+
+
+        $scope.getMapLayerSelected = function(layer) {
+            console.log(indexedSubLayers);
+            if ($scope.selectedMapLayers[layer.modelValue] === true) {
+                for (var key in indexedSubLayers) {
+                    if (indexedSubLayers[key] === layer.displayValue) {
+                        allSubLayers[key].show();
+                    }
+                }
+            } else {
+                for (var prop in indexedSubLayers) {
+                    if (indexedSubLayers[prop] === layer.displayValue) {
+                        allSubLayers[prop].hide();
+                    }
+                }
+            }
         };
 
         function initMap() {
@@ -24,10 +63,24 @@ angular.module('shnApp')
                 cdb.createLayer(map, vizJSON, { 'https': true })
                     .addTo(map)
                     .done(function(layer) {
-                        var numOfSubLayers = layer.getSubLayerCount();
-                        for (var i = 0; i < numOfSubLayers; i++) {
+
+                        // hide all layers when map loads
+                        for (var i = 0; i < layer.getSubLayerCount(); i++) {
                             layer.getSubLayer(i).hide();
+                            var sublayer = layer.getSubLayer(i);
+                            allSubLayers.push(sublayer);
                         }
+
+                        function mapSubLayers() {
+                            var subLayerData = layer.getSubLayer(0),
+                                subLayers = subLayerData._parent.layers;
+
+                            // create  indexed object with matching layerrs_name
+                            for (var j = 0; j < subLayers.length; j++) {
+                                indexedSubLayers[j] = subLayers[j].options.layer_name;
+                            }
+                        }
+                        mapSubLayers();
                     })
                     .error(function(err) {
                         console.log(err);

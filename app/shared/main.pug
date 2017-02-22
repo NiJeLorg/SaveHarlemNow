@@ -6,9 +6,11 @@ div(ng-controller='MapCtrl')
     .map-layers-content
       .layers-choropleth-layers
         .map-layer(ng-repeat='layer in mapLayers.choroplethLayers')
-          p {{layer}}
-          input(type='checkbox')
+          p {{layer.displayValue}}
+          input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)')
       .layers-pointLinePolygonal-layers
         .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalLayers')
-          p {{layer}}
-          input(type='checkbox')
+          p {{layer.displayValue}}
+          input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)')
+
+
