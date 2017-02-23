@@ -93,7 +93,6 @@ angular.module('shnApp')
                                         }
                                     }
                                 }
-
                             });
                         }
                         mapSubLayers();
