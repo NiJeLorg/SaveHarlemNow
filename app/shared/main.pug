@@ -1,4 +1,20 @@
 div(ng-controller='MapCtrl')
+  script(type='infowindow/html' id='{{layer.modelValue}}' ng-repeat='layer in mapLayers.choroplethLayers')
+    .cartodb-popup
+      a(href='#close' class='cartodb-popup-close-button close')
+      .cartodb-popup-content-wrapper
+        .cartodb-popup-content
+          p  {{cartodb_id}}
+      .cartodb-popup-tip-container
+
+  script(type='infowindow/html' id='{{layer.modelValue}}' ng-repeat='layer in mapLayers.choroplethLayers')
+    .cartodb-popup
+      a(href='#close' class='cartodb-popup-close-button close')
+      .cartodb-popup-content-wrapper
+        .cartodb-popup-content
+          p  {{cartodb_id}}
+      .cartodb-popup-tip-container
+
   .map-container#map
   .map-layers-holder
     .map-layers-title

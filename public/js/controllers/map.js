@@ -8,22 +8,23 @@ angular.module('shnApp')
         $scope.mapLayers = {
             choroplethLayers: [{
                     displayValue: 'Built FAR',
-                    modelValue: 'builtFar'
+                    modelValue: 'builtFar',
+                    layerSource: []
                 },
-                { displayValue: 'Land Use', modelValue: 'landUse' },
-                { displayValue: 'Zoning', modelValue: 'zoning' },
-                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate' },
-                { displayValue: 'Demographics', modelValue: 'demographics' }
+                { displayValue: 'Land Use', modelValue: 'landUse', layerSource: [] },
+                { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['cartodb_id'] },
+                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: ['cartodb_id'] },
+                { displayValue: 'Demographics', modelValue: 'demographics', layerSource: [] }
             ],
             pointLinePolygonalLayers: [
-                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks' },
-                { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks' },
-                { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk' },
-                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts' },
-                { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts' },
-                { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange' },
-                { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts' },
-                { displayValue: 'Transportation Infrastructure', modelValue: 'transportationInfrastructure' }
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['cartodb_id'] },
+                { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [] },
+                { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [] },
+                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: [] },
+                { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts', layerSource: [] },
+                { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange', layerSource: [] },
+                { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts', layerSource: [] },
+                { displayValue: 'Transportation Infrastructure', modelValue: 'transportationInfrastructure', layerSource: [] }
             ]
         };
 
@@ -47,7 +48,7 @@ angular.module('shnApp')
         function initMap() {
             var map = L.map('map', {
                 center: [40.811550, -73.946477],
-                zoom: 13
+                zoom: 13,
             });
 
             var baseMapLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
@@ -56,6 +57,7 @@ angular.module('shnApp')
             });
 
             map.addLayer(baseMapLayer);
+
 
             function createCDBLayer() {
                 var vizJSON = 'https://saveharlemnow.carto.com/api/v2/viz/a6b9d08c-e9fc-11e6-a3b3-0e05a8b3e3d7/viz.json';
@@ -79,7 +81,23 @@ angular.module('shnApp')
                                 indexedSubLayers[j] = subLayers[j].options.layer_name;
                             }
                         }
+
+                        function createInfowindows(obj) {
+                            Object.keys(obj).forEach(function(key) {
+                                for (var prop in indexedSubLayers) {
+                                    for (var i = 0; i < obj[key].length; i++) {
+                                        if (indexedSubLayers[prop] === obj[key][i].displayValue) {
+                                            cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(prop), obj[key][i].layerSource, {
+                                                infowindowTemplate: $(obj[key][i].modelValue).html(),
+                                            });
+                                        }
+                                    }
+                                }
+
+                            });
+                        }
                         mapSubLayers();
+                        createInfowindows($scope.mapLayers);
                     })
                     .error(function(err) {
                         console.log(err);
@@ -87,5 +105,6 @@ angular.module('shnApp')
             }
             createCDBLayer();
         }
+        console.log(indexedSubLayers);
         initMap();
     });
