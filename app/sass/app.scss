@@ -28,7 +28,6 @@ nav {
     position: absolute;
     top: 120px;
     right: 50px;
-    z-index: 400;
     .map-layers-title {
         height: 40px;
         font-family: 'Oxygen', sans-serif;
@@ -50,6 +49,41 @@ nav {
             padding: 0 10px;
             @extend .card;
         }
+    }
+}
+
+.md-dialog-container {
+    background: rgba(123, 125, 126, .7);
+    z-index: 1000;
+}
+
+.project-info-modal {
+    width: 32%;
+    border-radius: 0;
+    padding: 0 25px;
+    box-sizing: border-box;
+    border: 3px solid #1B2D41;
+    .close-modal {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+        i {
+            cursor: pointer;
+            outline: none;
+        }
+    }
+    .title {
+        text-align: center;
+        font-size: 24px;
+        padding: 12px 0;
+        font-weight: bolder;
+        color: #1B2D41;
+        border-bottom: 1px solid #A8A9A8;
+    }
+    .content {
+        padding: 20px 0;
+        margin-bottom: 25px;
+        line-height: 2.2;
     }
 }
 

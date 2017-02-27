@@ -1,5 +1,5 @@
 angular.module('shnApp')
-    .controller('MapCtrl', function($scope) {
+    .controller('MapCtrl', function($scope, $mdDialog) {
         var cdb = window.cartodb;
         $scope.selectedMapLayers = {};
         var indexedSubLayers = {};
@@ -14,7 +14,9 @@ angular.module('shnApp')
                 { displayValue: 'Land Use', modelValue: 'landUse', layerSource: [] },
                 { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['cartodb_id'] },
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: ['cartodb_id'] },
-                { displayValue: 'Demographics', modelValue: 'demographics', layerSource: [] }
+                { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: [] },
+                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: [] }
+
             ],
             pointLinePolygonalLayers: [
                 { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['cartodb_id'] },
@@ -44,6 +46,24 @@ angular.module('shnApp')
                 }
             }
         };
+
+        function DialogController($scope, $mdDialog) {
+            $scope.closeProjectInfoModal = function() {
+                localStorage.closeProjectInfoModal = true;
+                $mdDialog.hide();
+            };
+        }
+
+        function showProjectInfoModal() {
+            var status = localStorage.closeProjectInfoModal;
+            if (!status) {
+                $mdDialog.show({
+                    controller: DialogController,
+                    templateUrl: 'views/project-info-modal.html',
+                    clickOutsideToClose: true,
+                });
+            }
+        }
 
         function initMap() {
             var map = L.map('map', {
@@ -104,6 +124,7 @@ angular.module('shnApp')
             }
             createCDBLayer();
         }
-        console.log(indexedSubLayers);
+        showProjectInfoModal();
         initMap();
+        // console.log(indexedSubLayers);
     });

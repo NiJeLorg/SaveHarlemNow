@@ -8,6 +8,7 @@ const gulp = require('gulp'),
     paths = {
         sass: 'app/sass/**/*.scss',
         pug: ['!app/shared/**', 'app/**/*.pug'],
+        views: ['app/views/*.pug'],
         clientJS: 'public/js/**/*.js'
     };
 
@@ -17,6 +18,14 @@ gulp.task('pug-html', function() {
         .pipe(gulp.dest('public/'))
         .pipe(browserSync.reload({ stream: true }));
 });
+
+gulp.task('pug-views', function() {
+    gulp.src(paths.views)
+        .pipe(pug())
+        .pipe(gulp.dest('public/views/'))
+        .pipe(browserSync.reload({ stream: true }));
+});
+
 
 gulp.task('sass-css', function() {
     gulp.src(paths.sass)
@@ -51,5 +60,5 @@ gulp.task('browser-sync', function() {
     });
 });
 
-gulp.task('build', ['pug-html', 'sass-css']);
+gulp.task('build', ['pug-html', 'sass-css', 'pug-views']);
 gulp.task('default', ['build', 'nodemon', 'watch-files', 'browser-sync']);
