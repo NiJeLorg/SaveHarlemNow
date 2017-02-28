@@ -111,12 +111,14 @@ nav {
 .about-info-modal {
   width: 40%;
   border-radius: 0; }
-  .about-info-modal md-dialog-content md-tabs .about-tab {
-    padding: 15px;
-    background: none;
-    height: 100% !important; }
-    .about-info-modal md-dialog-content md-tabs .about-tab p {
-      line-height: 1.4;
-      margin-bottom: 20px; }
+  .about-info-modal md-dialog-content md-tabs {
+    height: 50%; }
+    .about-info-modal md-dialog-content md-tabs .about-tab {
+      padding: 15px;
+      background: none;
+      height: 100% !important; }
+      .about-info-modal md-dialog-content md-tabs .about-tab p {
+        line-height: 1.4;
+        margin-bottom: 20px; }
 
 /* New York City Zoning: */
