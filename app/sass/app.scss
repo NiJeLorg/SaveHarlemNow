@@ -108,10 +108,12 @@ nav {
     md-dialog-content {
         md-tabs {
             height: 50%;
-            .about-tab {
-                padding: 15px;
+            .tab {
                 background: none;
+                padding: 30px 40px;
                 height: 100% !important;
+            }
+            .about-tab-content {
                 p {
                     line-height: 1.4;
                     margin-bottom: 20px;
