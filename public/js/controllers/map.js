@@ -9,23 +9,23 @@ angular.module('shnApp')
             choroplethLayers: [{
                     displayValue: 'Built FAR',
                     modelValue: 'builtFar',
-                    layerSource: []
+                    layerSource: ['builtfar_maxfar', 'builtfar', 'residfar', 'commfar', 'facilfar', 'address', 'bbl']
                 },
-                { displayValue: 'Land Use', modelValue: 'landUse', layerSource: [] },
-                { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['cartodb_id'] },
-                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: ['cartodb_id'] },
-                { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: [] },
-                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: [] }
+                { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'] },
+                { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'] },
+                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [] },
+                { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: ['med_hh_inc'] },
+                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['pct_female'] }
 
             ],
             pointLinePolygonalLayers: [
-                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['cartodb_id'] },
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_actio'] },
                 { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [] },
                 { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [] },
-                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: [] },
+                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: ['area_name', 'bbl', 'lm_type', 'status_of', 'last_actio'] },
                 { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts', layerSource: [] },
                 { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange', layerSource: [] },
-                { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts', layerSource: [] },
+                { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts', layerSource: ['borocd'] },
                 { displayValue: 'Transportation Infrastructure', modelValue: 'transportationInfrastructure', layerSource: [] }
             ]
         };
@@ -47,18 +47,30 @@ angular.module('shnApp')
             }
         };
 
-        function DialogController($scope, $mdDialog) {
+        function ProjectInfoModalController($scope, $mdDialog) {
             $scope.closeProjectInfoModal = function() {
                 localStorage.closeProjectInfoModal = true;
                 $mdDialog.hide();
             };
         }
 
+        function AboutInfoModalController($scope, $mdDialog) {
+
+        }
+
+        $scope.showAboutInfoModal = function() {
+            $mdDialog.show({
+                controller: AboutInfoModalController,
+                templateUrl: 'views/about-info-modal.html',
+                clickOutsideToClose: true,
+            });
+        };
+
         function showProjectInfoModal() {
             var status = localStorage.closeProjectInfoModal;
             if (!status) {
                 $mdDialog.show({
-                    controller: DialogController,
+                    controller: ProjectInfoModalController,
                     templateUrl: 'views/project-info-modal.html',
                     clickOutsideToClose: true,
                 });
@@ -68,7 +80,7 @@ angular.module('shnApp')
         function initMap() {
             var map = L.map('map', {
                 center: [40.811550, -73.946477],
-                zoom: 13,
+                zoom: 14,
             });
 
             var baseMapLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {

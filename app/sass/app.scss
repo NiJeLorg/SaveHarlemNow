@@ -15,12 +15,27 @@ nav {
     box-shadow: 0 4px 4px 0 rgba(186, 186, 186, 0.5);
 }
 
+.info-nav {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    i {
+        margin-right: 20px;
+        color: #1B2D41;
+        cursor: pointer;
+        outline: none;
+    }
+}
+
 .map-container {
     position: absolute;
     top: 60px;
     width: 100%;
     height: 94%;
-    // z-index: -1;
 }
 
 .map-layers-holder {
@@ -54,7 +69,7 @@ nav {
 
 .md-dialog-container {
     background: rgba(123, 125, 126, .7);
-    z-index: 1000;
+    z-index: 1000001;
 }
 
 .project-info-modal {
@@ -84,6 +99,24 @@ nav {
         padding: 20px 0;
         margin-bottom: 25px;
         line-height: 2.2;
+    }
+}
+
+.about-info-modal {
+    width: 40%;
+    border-radius: 0;
+    md-dialog-content {
+        md-tabs {
+            .about-tab {
+                padding: 15px;
+                background: none;
+                height: 100% !important;
+                p {
+                    line-height: 1.4;
+                    margin-bottom: 20px;
+                }
+            }
+        }
     }
 }
 
