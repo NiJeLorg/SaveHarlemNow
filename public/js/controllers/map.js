@@ -1,9 +1,11 @@
 angular.module('shnApp')
     .controller('MapCtrl', function($scope, $mdDialog) {
-        var cdb = window.cartodb;
+        var cdb = window.cartodb,
+            indexedSubLayers = {},
+            allSubLayers = [],
+            initialSubLayersLength;
+
         $scope.selectedMapLayers = {};
-        var indexedSubLayers = {};
-        var allSubLayers = [];
 
         $scope.mapLayers = {
             choroplethLayers: [{
@@ -78,6 +80,9 @@ angular.module('shnApp')
         }
 
         function initMap() {
+            var choroplethVizJSON = 'https://saveharlemnow.carto.com/api/v2/viz/dd3b212e-fdde-11e6-adbd-0e3ebc282e83/viz.json',
+                pointLinePolygonalVizJSON = 'https://saveharlemnow.carto.com/api/v2/viz/4b650ba0-fde0-11e6-865d-0e3ebc282e83/viz.json';
+
             var map = L.map('map', {
                 center: [40.811550, -73.946477],
                 zoom: 14,
@@ -91,8 +96,8 @@ angular.module('shnApp')
             map.addLayer(baseMapLayer);
 
 
-            function createCDBLayer() {
-                var vizJSON = 'https://saveharlemnow.carto.com/api/v2/viz/a6b9d08c-e9fc-11e6-a3b3-0e05a8b3e3d7/viz.json';
+            function createCDBLayer(vizJSON) {
+
                 cdb.createLayer(map, vizJSON, { 'https': true })
                     .addTo(map)
                     .done(function(layer) {
@@ -104,28 +109,52 @@ angular.module('shnApp')
                             allSubLayers.push(sublayer);
                         }
 
+
                         function mapSubLayers() {
                             var subLayerData = layer.getSubLayer(0),
-                                subLayers = subLayerData._parent.layers;
-
+                                subLayers = subLayerData._parent.layers,
+                                len = Object.keys(indexedSubLayers).length,
+                                j;
                             // create  indexed object with matching layerrs_name
-                            for (var j = 0; j < subLayers.length; j++) {
-                                indexedSubLayers[j] = subLayers[j].options.layer_name;
+                            if (len > 1) {
+                                for (j = 0; j < subLayers.length; j++) {
+                                    indexedSubLayers[len + j] = subLayers[j].options.layer_name;
+                                }
+                            } else {
+                                for (j = 0; j < subLayers.length; j++) {
+                                    indexedSubLayers[j] = subLayers[j].options.layer_name;
+                                }
+                                initialSubLayersLength = Object.keys(indexedSubLayers).length;
                             }
+
                         }
 
                         function createInfowindows(obj) {
-                            Object.keys(obj).forEach(function(key) {
-                                for (var prop in indexedSubLayers) {
-                                    for (var i = 0; i < obj[key].length; i++) {
-                                        if (indexedSubLayers[prop] === obj[key][i].displayValue) {
-                                            cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(prop), obj[key][i].layerSource, {
-                                                infowindowTemplate: $(obj[key][i].modelValue).html(),
+                            var len = Object.keys(indexedSubLayers).length,
+                                prop,
+                                i;
+
+                            if (len === initialSubLayersLength) {
+                                for (prop in indexedSubLayers) {
+                                    for (i = 0; i < obj.choroplethLayers.length; i++) {
+                                        if (indexedSubLayers[prop] === obj.choroplethLayers[i].displayValue) {
+                                            cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(prop), obj.choroplethLayers[i].layerSource, {
+                                                infowindowTemplate: $(obj.choroplethLayers[i].modelValue).html(),
                                             });
                                         }
                                     }
                                 }
-                            });
+                            } else {
+                                for (prop in indexedSubLayers) {
+                                    for (i = 0; i < obj.pointLinePolygonalLayers.length; i++) {
+                                        if (indexedSubLayers[prop] === obj.pointLinePolygonalLayers[i].displayValue) {
+                                            cdb.vis.Vis.addInfowindow(map, layer.getSubLayer((prop - initialSubLayersLength)), obj.pointLinePolygonalLayers[i].layerSource, {
+                                                infowindowTemplate: $(obj.pointLinePolygonalLayers[i].modelValue).html(),
+                                            });
+                                        }
+                                    }
+                                }
+                            }
                         }
                         mapSubLayers();
                         createInfowindows($scope.mapLayers);
@@ -134,9 +163,10 @@ angular.module('shnApp')
                         console.log(err);
                     });
             }
-            createCDBLayer();
+            createCDBLayer(choroplethVizJSON);
+            createCDBLayer(pointLinePolygonalVizJSON);
         }
         showProjectInfoModal();
         initMap();
-        // console.log(indexedSubLayers);
+        console.log(indexedSubLayers);
     });
