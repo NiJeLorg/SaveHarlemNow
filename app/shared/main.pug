@@ -23,51 +23,10 @@ div(ng-controller='MapCtrl')
     .close-overlay
       i.fa.fa-times.fa-2x(ng-click='closeOverlayNavigation()')
     .overlay-content
-      p(ng-repeat='layer in mapLayers.choroplethLayers'  ng-click='getMapLayerSelected(layer)') {{layer.displayValue}}
-      p(ng-repeat='layer in mapLayers.pointLinePolygonalLayers') {{layer.displayValue}}
+      p(ng-repeat='layer in mapLayers.choroplethLayers' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
+      p(ng-repeat='layer in mapLayers.pointLinePolygonalLayers' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
 
   .legends-holder
-    #zoning.legend
-      .title Zoning
-      .range
-        p R7-2
-        span(style='background: #5f4690')
-      .range
-        p R8-B
-        span(style='background: #1D6996')
-      .range
-        p R7A
-        span(style='background: #38A6A5')
-      .range
-        p R8
-        span(style='background: #0F8252')
-      .range
-        p C6-2A
-        span(style='background: #73AF48')
-      .range
-        p R6
-        span(style='background: #EDAD08')
-      .range
-        p R8A
-        span(style='background: #E17C05')
-      .range
-        p R7B
-        span(style='background: #CC503E')
-      .range
-        p R6A
-        span(style='background: #8F326B')
-      .range
-        p R10
-        span(style='background: #6F4070')
-      .range
-        p OTHERS
-        span(style='background: #6E6E6E')
-
-
-
-
-
-
 
   .map-container#map
   .map-layers-holder

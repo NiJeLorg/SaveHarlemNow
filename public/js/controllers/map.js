@@ -5,6 +5,7 @@ angular.module('shnApp')
             allSubLayers = [],
             initialSubLayersLength;
 
+
         $scope.selectedMapLayers = {};
         var medianHouseholdIncome = angular.element('<div class="legend" id="medianHouseholdIncome"><div class="title"><p>Median Household Income</p></div><div class="range"><p>0</p><p>250k</p></div><div class="bar median-household-income-bar"></div></div>'),
             percentFemale = angular.element('<div class="legend" id="percentFemale"><div class="title"><p>Percent Female</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar percent-female-bar"></div></div>'),
@@ -25,7 +26,7 @@ angular.module('shnApp')
             choroplethLayers: [{
                     displayValue: 'Built FAR',
                     modelValue: 'builtFar',
-                    layerSource: ['builtfar_maxfar', 'builtfar', 'residfar', 'commfar', 'facilfar', 'address', 'bbl']
+                    layerSource: ['builtfar_maxfar', 'builtfar', 'residfar', 'commfar', 'facilfar', 'address', 'bbl'],
                 },
                 { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'] },
                 { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'] },
@@ -68,13 +69,26 @@ angular.module('shnApp')
 
         $scope.showOverlayNavigation = function() {
             $('.overlay-nav').css('width', '100%');
+            $('.overlay-nav .overlay-content p').css('opacity', '1');
         };
 
         $scope.closeOverlayNavigation = function() {
             $('.overlay-nav').css('width', '0');
+            $('.overlay-nav .overlay-content p').css('opacity', '0');
         };
 
-        angular.element('.legend').css('display', 'none')
+        $scope.getMapLayerSelectedMobile = function(layer) {
+            if (layer.selectedOnMobile === true) {
+                $scope.selectedMapLayers[layer.modelValue] = false;
+                $scope.getMapLayerSelected(layer);
+                layer.selectedOnMobile = false;
+            } else {
+                $scope.selectedMapLayers[layer.modelValue] = true;
+                $scope.getMapLayerSelected(layer);
+                layer.selectedOnMobile = true;
+            }
+            $scope.closeOverlayNavigation();
+        };
 
         function ProjectInfoModalController($scope, $mdDialog) {
             $scope.closeProjectInfoModal = function() {
