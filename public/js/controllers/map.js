@@ -6,6 +6,20 @@ angular.module('shnApp')
             initialSubLayersLength;
 
         $scope.selectedMapLayers = {};
+        var medianHouseholdIncome = angular.element('<div class="legend" id="medianHouseholdIncome"><div class="title"><p>Median Household Income</p></div><div class="range"><p>0</p><p>250k</p></div><div class="bar median-household-income-bar"></div></div>'),
+            percentFemale = angular.element('<div class="legend" id="percentFemale"><div class="title"><p>Percent Female</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar percent-female-bar"></div></div>'),
+            builtFar = angular.element('<div class="legend" id="builtFar"><div class="title"><p>Built FAR</p></div><div class="range"><p>0</p><p>7.39</p></div><div class="bar built-far-bar"></div></div>'),
+            landUse = angular.element('<div class="legend" id="landUse"><div class="title">Land Use</div><div class="range"><p>02</p><span style="background: #5f4690"></span></div><div class="range"><p>04</p><span style="background: #1D6996"></span></div><div class="range"><p>05</p><span style="background: #38A6A5"></span></div><div class="range"><p>03</p><span style="background: #0F8252"></span></div><div class="range"><p>01</p><span style="background: #73AF48"></span></div><div class="range"><p>08</p><span style="background: #EDAD08"></span></div><div class="range"><p>11</p><span style="background: #E17C05"></span></div><div class="range"><p>06</p><span style="background: #CC503E"></span></div><div class="range"><p>10</p><span style="background: #8F326B"></span></div><div class="range"><p>07</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
+            zoning = angular.element('<div class="legend" id="zoning"><div class="title">Zoning</div><div class="range"><p>R7-2</p><span style="background: #5f4690"></span></div><div class="range"><p>R8-B</p><span style="background: #1D6996"></span></div><div class="range"><p>R7A</p><span style="background: #38A6A5"></span></div><div class="range"><p>R8</p><span style="background: #0F8252"></span></div><div class="range"><p>C6-2A</p><span style="background: #73AF48"></span></div><div class="range"><p>R6</p><span style="background: #EDAD08"></span></div><div class="range"><p>R8A</p><span style="background: #E17C05"></span></div><div class="range"><p>R7B</p><span style="background: #CC503E"></span></div><div class="range"><p>R6A</p><span style="background: #8F326B"></span></div><div class="range"><p>R10</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>');
+
+        var legends = {
+            medianHouseholdIncome: medianHouseholdIncome,
+            percentFemale: percentFemale,
+            builtFar: builtFar,
+            landUse: landUse,
+            zoning: zoning
+        };
+
 
         $scope.mapLayers = {
             choroplethLayers: [{
@@ -34,20 +48,33 @@ angular.module('shnApp')
 
 
         $scope.getMapLayerSelected = function(layer) {
+            var key, prop;
             if ($scope.selectedMapLayers[layer.modelValue] === true) {
-                for (var key in indexedSubLayers) {
+                for (key in indexedSubLayers) {
                     if (indexedSubLayers[key] === layer.displayValue) {
                         allSubLayers[key].show();
+                        angular.element('.legends-holder').append(legends[layer.modelValue]);
                     }
                 }
             } else {
-                for (var prop in indexedSubLayers) {
-                    if (indexedSubLayers[prop] === layer.displayValue) {
-                        allSubLayers[prop].hide();
+                for (key in indexedSubLayers) {
+                    if (indexedSubLayers[key] === layer.displayValue) {
+                        allSubLayers[key].hide();
+                        legends[layer.modelValue].remove();
                     }
                 }
             }
         };
+
+        $scope.showOverlayNavigation = function() {
+            $('.overlay-nav').css('width', '100%');
+        };
+
+        $scope.closeOverlayNavigation = function() {
+            $('.overlay-nav').css('width', '0');
+        };
+
+        angular.element('.legend').css('display', 'none')
 
         function ProjectInfoModalController($scope, $mdDialog) {
             $scope.closeProjectInfoModal = function() {
@@ -97,18 +124,15 @@ angular.module('shnApp')
 
 
             function createCDBLayer(vizJSON) {
-
-                cdb.createLayer(map, vizJSON, { 'https': true })
+                cdb.createLayer(map, vizJSON, { legends: true })
                     .addTo(map)
                     .done(function(layer) {
-
                         // hide all layers when map loads
                         for (var i = 0; i < layer.getSubLayerCount(); i++) {
                             layer.getSubLayer(i).hide();
                             var sublayer = layer.getSubLayer(i);
                             allSubLayers.push(sublayer);
                         }
-
 
                         function mapSubLayers() {
                             var subLayerData = layer.getSubLayer(0),
@@ -168,5 +192,4 @@ angular.module('shnApp')
         }
         showProjectInfoModal();
         initMap();
-        console.log(indexedSubLayers);
     });
