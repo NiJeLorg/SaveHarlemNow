@@ -191,9 +191,7 @@ md-tabs md-ink-bar {
 .legend {
   width: 192px;
   background: #fff;
-  margin-bottom: 25px;
-  max-height: 400px;
-  overflow-y: scroll; }
+  margin-bottom: 25px; }
   .legend .title {
     font-size: 12px;
     margin-bottom: 12px; }

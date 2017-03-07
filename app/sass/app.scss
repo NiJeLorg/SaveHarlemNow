@@ -207,8 +207,7 @@ md-tabs md-ink-bar {
     width: 192px;
     background: #fff;
     margin-bottom: 25px;
-    max-height: 400px;
-    overflow-y: scroll;
+    // overflow: scroll;
     .title {
         font-size: 12px;
         margin-bottom: 12px;
