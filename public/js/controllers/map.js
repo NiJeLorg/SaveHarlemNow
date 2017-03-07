@@ -185,7 +185,8 @@ angular.module('shnApp')
                             } else {
                                 for (prop in indexedSubLayers) {
                                     for (i = 0; i < obj.pointLinePolygonalLayers.length; i++) {
-                                        if (indexedSubLayers[prop] === obj.pointLinePolygonalLayers[i].displayValue) {
+                                        if (indexedSubLayers[prop] === obj.pointLinePolygonalLayers[i].displayValue && indexedSubLayers[prop] !== 'NYC Community Districts') {
+                                            console.log(indexedSubLayers[prop]);
                                             cdb.vis.Vis.addInfowindow(map, layer.getSubLayer((prop - initialSubLayersLength)), obj.pointLinePolygonalLayers[i].layerSource, {
                                                 infowindowTemplate: $(obj.pointLinePolygonalLayers[i].modelValue).html(),
                                             });
@@ -196,6 +197,7 @@ angular.module('shnApp')
                         }
                         mapSubLayers();
                         createInfowindows($scope.mapLayers);
+                        console.log(indexedSubLayers)
                     })
                     .error(function(err) {
                         console.log(err);
