@@ -3,9 +3,10 @@ angular.module('shnApp')
         var cdb = window.cartodb,
             indexedSubLayers = {},
             allSubLayers = [],
-            initialSubLayersLength;
+            initialSubLayersLength,
+            choroplethInputs;
 
-
+        $scope.checkedInput = true;
         $scope.selectedMapLayers = {};
         var medianHouseholdIncome = angular.element('<div class="legend" id="medianHouseholdIncome"><div class="title"><p>Median Household Income</p></div><div class="range"><p>0</p><p>250k</p></div><div class="bar median-household-income-bar"></div></div>'),
             percentFemale = angular.element('<div class="legend" id="percentFemale"><div class="title"><p>Percent Female</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar percent-female-bar"></div></div>'),
@@ -27,12 +28,17 @@ angular.module('shnApp')
                     displayValue: 'Built FAR',
                     modelValue: 'builtFar',
                     layerSource: ['builtfar_maxfar', 'builtfar', 'residfar', 'commfar', 'facilfar', 'address', 'bbl'],
+                    layerType: 'choropleth',
                 },
                 { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'] },
                 { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'] },
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [] },
                 { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: ['med_hh_inc'] },
-                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['pct_female'] }
+                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['pct_female'] },
+                { displayValue: 'Median Age', modelValue: 'medianAge', layerSource: [] },
+                { displayValue: 'Percent Owner Occupied', modelValue: 'percentOwnerOccupied', layerSource: [] },
+                { displayValue: "Plurality Group's Percent of Population", modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: [] }
+
 
             ],
             pointLinePolygonalLayers: [
@@ -47,6 +53,9 @@ angular.module('shnApp')
             ]
         };
 
+        $scope.clickedChoroplethInput = function(boolean) {
+            return boolean;
+        };
 
         $scope.getMapLayerSelected = function(layer) {
             var key, prop;
@@ -89,6 +98,7 @@ angular.module('shnApp')
             }
             $scope.closeOverlayNavigation();
         };
+
 
         function ProjectInfoModalController($scope, $mdDialog) {
             $scope.closeProjectInfoModal = function() {
@@ -186,7 +196,6 @@ angular.module('shnApp')
                                 for (prop in indexedSubLayers) {
                                     for (i = 0; i < obj.pointLinePolygonalLayers.length; i++) {
                                         if (indexedSubLayers[prop] === obj.pointLinePolygonalLayers[i].displayValue && indexedSubLayers[prop] !== 'NYC Community Districts') {
-                                            console.log(indexedSubLayers[prop]);
                                             cdb.vis.Vis.addInfowindow(map, layer.getSubLayer((prop - initialSubLayersLength)), obj.pointLinePolygonalLayers[i].layerSource, {
                                                 infowindowTemplate: $(obj.pointLinePolygonalLayers[i].modelValue).html(),
                                             });
@@ -197,7 +206,6 @@ angular.module('shnApp')
                         }
                         mapSubLayers();
                         createInfowindows($scope.mapLayers);
-                        console.log(indexedSubLayers)
                     })
                     .error(function(err) {
                         console.log(err);
@@ -208,4 +216,8 @@ angular.module('shnApp')
         }
         showProjectInfoModal();
         initMap();
+        angular.element(document).ready(function() {
+            choroplethInputs = $('.layers-choropleth-layers :input');
+        });
+        console.log(indexedSubLayers);
     });
