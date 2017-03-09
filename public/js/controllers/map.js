@@ -6,7 +6,7 @@ angular.module('shnApp')
             initialSubLayersLength,
             choroplethInputs;
 
-        $scope.checkedInput = true;
+        $scope.disabledInputs = {};
         $scope.selectedMapLayers = {};
         var medianHouseholdIncome = angular.element('<div class="legend" id="medianHouseholdIncome"><div class="title"><p>Median Household Income</p></div><div class="range"><p>0</p><p>250k</p></div><div class="bar median-household-income-bar"></div></div>'),
             percentFemale = angular.element('<div class="legend" id="percentFemale"><div class="title"><p>Percent Female</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar percent-female-bar"></div></div>'),
@@ -30,14 +30,14 @@ angular.module('shnApp')
                     layerSource: ['builtfar_maxfar', 'builtfar', 'residfar', 'commfar', 'facilfar', 'address', 'bbl'],
                     layerType: 'choropleth',
                 },
-                { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'] },
-                { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'] },
-                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [] },
-                { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: ['med_hh_inc'] },
-                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['pct_female'] },
-                { displayValue: 'Median Age', modelValue: 'medianAge', layerSource: [] },
-                { displayValue: 'Percent Owner Occupied', modelValue: 'percentOwnerOccupied', layerSource: [] },
-                { displayValue: "Plurality Group's Percent of Population", modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: [] }
+                { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'], layerType: 'choropleth' },
+                { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'], layerType: 'choropleth' },
+                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'choropleth' },
+                { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: ['med_hh_inc'], layerType: 'choropleth' },
+                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['pct_female'], layerType: 'choropleth' },
+                { displayValue: 'Median Age', modelValue: 'medianAge', layerSource: [], layerType: 'choropleth' },
+                { displayValue: 'Percent Owner Occupied', modelValue: 'percentOwnerOccupied', layerSource: [], layerType: 'choropleth' },
+                { displayValue: 'Plurality Group\'s Percent of Population', modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: [], layerType: 'choropleth' }
 
 
             ],
@@ -53,13 +53,31 @@ angular.module('shnApp')
             ]
         };
 
-        $scope.clickedChoroplethInput = function(boolean) {
-            return boolean;
-        };
+        function disableChoroplethInputs(layer, status) {
+            var i;
+            if (status) {
+                for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
+                    if (layer.modelValue === $scope.mapLayers.choroplethLayers[i].modelValue) {
+                        angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', false);
+                    } else {
+                        angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', true);
+                    }
+                }
+            } else {
+                for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
+                    angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', false);
+                }
+            }
+
+        }
+
 
         $scope.getMapLayerSelected = function(layer) {
             var key, prop;
             if ($scope.selectedMapLayers[layer.modelValue] === true) {
+                if (layer.layerType === 'choropleth') {
+                    disableChoroplethInputs(layer, true);
+                }
                 for (key in indexedSubLayers) {
                     if (indexedSubLayers[key] === layer.displayValue) {
                         allSubLayers[key].show();
@@ -67,6 +85,9 @@ angular.module('shnApp')
                     }
                 }
             } else {
+                if (layer.layerType === 'choropleth') {
+                    disableChoroplethInputs(layer, false);
+                }
                 for (key in indexedSubLayers) {
                     if (indexedSubLayers[key] === layer.displayValue) {
                         allSubLayers[key].hide();
@@ -216,8 +237,4 @@ angular.module('shnApp')
         }
         showProjectInfoModal();
         initMap();
-        angular.element(document).ready(function() {
-            choroplethInputs = $('.layers-choropleth-layers :input');
-        });
-        console.log(indexedSubLayers);
     });
