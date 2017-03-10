@@ -14,7 +14,10 @@ angular.module('shnApp')
             landUse = angular.element('<div class="legend" id="landUse"><div class="title">Land Use</div><div class="range"><p>02</p><span style="background: #5f4690"></span></div><div class="range"><p>04</p><span style="background: #1D6996"></span></div><div class="range"><p>05</p><span style="background: #38A6A5"></span></div><div class="range"><p>03</p><span style="background: #0F8252"></span></div><div class="range"><p>01</p><span style="background: #73AF48"></span></div><div class="range"><p>08</p><span style="background: #EDAD08"></span></div><div class="range"><p>11</p><span style="background: #E17C05"></span></div><div class="range"><p>06</p><span style="background: #CC503E"></span></div><div class="range"><p>10</p><span style="background: #8F326B"></span></div><div class="range"><p>07</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
             zoning = angular.element('<div class="legend" id="zoning"><div class="title">Zoning</div><div class="range"><p>R7-2</p><span style="background: #5f4690"></span></div><div class="range"><p>R8-B</p><span style="background: #1D6996"></span></div><div class="range"><p>R7A</p><span style="background: #38A6A5"></span></div><div class="range"><p>R8</p><span style="background: #0F8252"></span></div><div class="range"><p>C6-2A</p><span style="background: #73AF48"></span></div><div class="range"><p>R6</p><span style="background: #EDAD08"></span></div><div class="range"><p>R8A</p><span style="background: #E17C05"></span></div><div class="range"><p>R7B</p><span style="background: #CC503E"></span></div><div class="range"><p>R6A</p><span style="background: #8F326B"></span></div><div class="range"><p>R10</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
             medianAge = angular.element('<div id="medianAge" class="legend"><div class="title"><p>Median Age</p></div><div class="range"><p>0</p><p>71.1</p></div><div class="bar median-age-bar"></div></div>'),
-            percentOwnerOccupied = angular.element('<div id="percentOwnerOccupied" class="legend"><div class="title"><p>Percent Owner Occupied</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar percent-owner-occupied-bar"></div></div>');
+            percentOwnerOccupied = angular.element('<div id="percentOwnerOccupied" class="legend"><div class="title"><p>Percent Owner Occupied</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar percent-owner-occupied-bar"></div></div>'),
+            existingLandmarks = angular.element('<div class="legend" id="existingLandmarks"><div class="title"><p>Existing Landmarks</p></div><div class="range"><p>Landmarks</p><span style="background: #2562A2"></span></div></div>'),
+            existingHistoricDistricts = angular.element('<div class="legend" id="existingHistoricDistricts"><div class="title"><p>Existing Historic Districts</p></div><div class="range"><p>Existing Historic Districts</p><span style="background: #FC6B21"></span></div></div>'),
+            nycCommunityDistricts = angular.element('<div class="legend" id="nycCommunityDistricts"><div class="title"><p>NYC Community Districts</p></div><div class="range"><p>NYC Community Districts</p><span style="background: #FDD130"></span></div></div>');
 
         var legends = {
             medianHouseholdIncome: medianHouseholdIncome,
@@ -23,7 +26,10 @@ angular.module('shnApp')
             landUse: landUse,
             zoning: zoning,
             medianAge: medianAge,
-            percentOwnerOccupied: percentOwnerOccupied
+            percentOwnerOccupied: percentOwnerOccupied,
+            existingLandmarks: existingLandmarks,
+            existingHistoricDistricts: existingHistoricDistricts,
+            nycCommunityDistricts: nycCommunityDistricts
         };
 
 
