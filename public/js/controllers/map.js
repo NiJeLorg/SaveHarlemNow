@@ -17,7 +17,8 @@ angular.module('shnApp')
             percentOwnerOccupied = angular.element('<div id="percentOwnerOccupied" class="legend"><div class="title"><p>Percent Owner Occupied</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar percent-owner-occupied-bar"></div></div>'),
             existingLandmarks = angular.element('<div class="legend" id="existingLandmarks"><div class="title"><p>Existing Landmarks</p></div><div class="range"><p>Landmarks</p><span style="background: #2562A2"></span></div></div>'),
             existingHistoricDistricts = angular.element('<div class="legend" id="existingHistoricDistricts"><div class="title"><p>Existing Historic Districts</p></div><div class="range"><p>Existing Historic Districts</p><span style="background: #FC6B21"></span></div></div>'),
-            nycCommunityDistricts = angular.element('<div class="legend" id="nycCommunityDistricts"><div class="title"><p>NYC Community Districts</p></div><div class="range"><p>NYC Community Districts</p><span style="background: #FDD130"></span></div></div>');
+            nycCommunityDistricts = angular.element('<div class="legend" id="nycCommunityDistricts"><div class="title"><p>NYC Community Districts</p></div><div class="range"><p>NYC Community Districts</p><span style="background: #FDD130"></span></div></div>'),
+            subwayLines = angular.element('<div class="legend" id="subwayLines"><div class="title"><p>Subway Lines</p></div><div class="range"><p>B-D-F-M</p><span style="background: #ED703A"></span></div><div class="range"><p>A-C-E</p><span style="background: #0046A4"></span></div><div class="range"><p>4-5-6</p><span style="background: #468C3B"></span></div><div class="range"><p>N-Q-R-W</p><span style="background: #F4C733"></span></div><div class="range"><p>1-2-3</p><span style="background: #DB4E42"></span></div><div class="range"><p>J-Z</p><span style="background: #916639"></span></div><div class="range"><p>L-S</p><span style="background: #A5A7AA"></span></div><div class="range"><p>G</p><span style="background: #84B647"></span></div><div class="range"><p>7</p><span style="background: #A850AD"></span></div></div>');
 
         var legends = {
             medianHouseholdIncome: medianHouseholdIncome,
@@ -29,7 +30,9 @@ angular.module('shnApp')
             percentOwnerOccupied: percentOwnerOccupied,
             existingLandmarks: existingLandmarks,
             existingHistoricDistricts: existingHistoricDistricts,
-            nycCommunityDistricts: nycCommunityDistricts
+            nycCommunityDistricts: nycCommunityDistricts,
+            subwayLines: subwayLines
+
         };
 
 
