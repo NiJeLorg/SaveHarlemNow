@@ -37,14 +37,14 @@ angular.module('shnApp')
             choroplethLayers: [{
                     displayValue: 'Built FAR',
                     modelValue: 'builtFar',
-                    layerSource: ['builtfar_maxfar', 'builtfar', 'residfar', 'commfar', 'facilfar', 'address', 'bbl'],
+                    layerSource: ['built_far_over_max_far', 'built_far', 'residential_far', 'commercial_far', 'facility_far', 'address', 'bbl'],
                     layerType: 'choropleth',
                 },
                 { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'], layerType: 'choropleth' },
                 { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'], layerType: 'choropleth' },
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'choropleth' },
-                { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: ['med_hh_inc'], layerType: 'choropleth' },
-                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['pct_female'], layerType: 'choropleth' },
+                { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: ['median_household_income'], layerType: 'choropleth' },
+                { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['percent_female'], layerType: 'choropleth' },
                 { displayValue: 'Median Age', modelValue: 'medianAge', layerSource: [], layerType: 'choropleth' },
                 { displayValue: 'Percent Owner Occupied', modelValue: 'percentOwnerOccupied', layerSource: [], layerType: 'choropleth' },
                 { displayValue: 'Plurality Group\'s Percent of Population', modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: [], layerType: 'choropleth' }
@@ -52,14 +52,14 @@ angular.module('shnApp')
 
             ],
             pointLinePolygonalLayers: [
-                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_actio'] },
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_action'] },
                 { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [] },
                 { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [] },
                 { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: ['area_name', 'bbl', 'lm_type', 'status_of', 'last_actio'] },
                 { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts', layerSource: [] },
                 { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange', layerSource: [] },
                 { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts', layerSource: ['borocd'] },
-                { displayValue: 'Transportation Infrastructure', modelValue: 'transportationInfrastructure', layerSource: [] }
+                { displayValue: 'Subway Lines', modelValue: 'subwayLines', layerSource: [] }
             ]
         };
 
@@ -244,6 +244,7 @@ angular.module('shnApp')
             }
             createCDBLayer(choroplethVizJSON);
             createCDBLayer(pointLinePolygonalVizJSON);
+            console.log(indexedSubLayers, 'INDEX');
         }
         showProjectInfoModal();
         initMap();
