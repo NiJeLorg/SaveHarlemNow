@@ -196,14 +196,14 @@ md-tabs md-ink-bar {
     z-index: 2;
     bottom: 40;
     left: 20;
-    padding: 16px;
-    padding-bottom: 0;
     background: #fff;
     box-shadow: rgba(0, 0, 0, 0.239216) 0px 2px 4px 0px;
     border-radius: 4px;
 }
 
 .legend {
+    padding: 16px;
+    padding-bottom: 0;
     width: 192px;
     background: #fff;
     margin-bottom: 25px;
