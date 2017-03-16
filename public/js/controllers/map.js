@@ -2,7 +2,7 @@ angular.module('shnApp')
     .controller('MapCtrl', function($scope, $mdDialog) {
         var cdb = window.cartodb,
             indexedSubLayers = {},
-            allSubLayers = { choroplethLayers: [], pointLinePolygonalLayers: [] },
+            allSubLayers = {},
             initialSubLayersLength,
             choroplethInputs;
 
@@ -38,7 +38,7 @@ angular.module('shnApp')
 
 
         $scope.mapLayers = {
-            choroplethLayers: [{
+            choroplethMapLayer: [{
                     displayValue: 'Built FAR',
                     modelValue: 'builtFar',
                     layerSource: ['built_far_over_max_far', 'built_far', 'residential_far', 'commercial_far', 'facility_far', 'address', 'bbl'],
@@ -46,24 +46,24 @@ angular.module('shnApp')
                 },
                 { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'], layerType: 'choropleth' },
                 { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'], layerType: 'choropleth' },
-                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'choropleth' },
                 { displayValue: 'Median Household Income', modelValue: 'medianHouseholdIncome', layerSource: ['median_household_income'], layerType: 'choropleth' },
                 { displayValue: 'Percent Female', modelValue: 'percentFemale', layerSource: ['percent_female'], layerType: 'choropleth' },
                 { displayValue: 'Median Age', modelValue: 'medianAge', layerSource: [], layerType: 'choropleth' },
                 { displayValue: 'Percent Owner Occupied', modelValue: 'percentOwnerOccupied', layerSource: [], layerType: 'choropleth' },
                 { displayValue: 'Plurality Group\'s Percent of Population', modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: [], layerType: 'choropleth' }
-
-
             ],
-            pointLinePolygonalLayers: [
-                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_action'] },
-                { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [] },
-                { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [] },
-                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: ['area_name', 'bbl', 'lm_type', 'status_of', 'last_actio'] },
-                { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts', layerSource: [] },
-                { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange', layerSource: [] },
-                { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts', layerSource: ['borocd'] },
-                { displayValue: 'Subway Lines', modelValue: 'subwayLines', layerSource: [] }
+            landmarkRateMapLayer: [
+                { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'landmarkRate' },
+            ],
+            pointLinePolygonalMapLayer: [
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_action'], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: ['area_name', 'bbl', 'lm_type', 'status_of', 'last_actio'], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts', layerSource: [], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange', layerSource: [], layerType: 'pointLinePolygonal' },
+                { displayValue: 'NYC Community Districts', modelValue: 'nycCommunityDistricts', layerSource: ['borocd'], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Subway Lines', modelValue: 'subwayLines', layerSource: [], layerType: 'pointLinePolygonal' }
             ]
         };
 
@@ -87,30 +87,29 @@ angular.module('shnApp')
 
 
         $scope.getMapLayerSelected = function(layer) {
-            var key, prop;
-            if ($scope.selectedMapLayers[layer.modelValue] === true) {
-                if (layer.layerType === 'choropleth') {
-                    disableChoroplethInputs(layer, true);
-                }
-                for (key in indexedSubLayers) {
-                    if (indexedSubLayers[key] === layer.displayValue) {
-                        console.log(key, 'KEY');
-                        console.log(indexedSubLayers[key]);
-                        allSubLayers[key].show();
+            var prop,
+                key = layer.layerType + 'MapLayer';
+
+
+            function showMapLayer() {
+                allSubLayers[key].forEach(function(sublayer, index) {
+                    if (sublayer[1] === layer.displayValue) {
+                        sublayer[0].show();
                         angular.element('.legends-holder').append(legends[layer.modelValue]);
                     }
-                }
-            } else {
-                if (layer.layerType === 'choropleth') {
-                    disableChoroplethInputs(layer, false);
-                }
-                for (key in indexedSubLayers) {
-                    if (indexedSubLayers[key] === layer.displayValue) {
-                        allSubLayers[key].hide();
+                });
+            }
+
+            function hideMapLayer() {
+                allSubLayers[key].forEach(function(sublayer, index) {
+                    if (sublayer[1] === layer.displayValue) {
+                        sublayer[0].hide();
                         legends[layer.modelValue].remove();
                     }
-                }
+                });
             }
+
+            ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(): hideMapLayer();
         };
 
         $scope.showOverlayNavigation = function() {
@@ -168,8 +167,9 @@ angular.module('shnApp')
         }
 
         function initMap() {
-            var choroplethVizJSON = 'https://saveharlemnow.carto.com/api/v2/viz/a6b9d08c-e9fc-11e6-a3b3-0e05a8b3e3d7/viz.json',
-                pointLinePolygonalVizJSON = 'https://saveharlemnow.carto.com/api/v2/viz/4b650ba0-fde0-11e6-865d-0e3ebc282e83/viz.json';
+            var choroplethVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/dd3b212e-fdde-11e6-adbd-0e3ebc282e83/viz.json', 'choroplethMapLayer'],
+                pointLinePolygonalVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/4b650ba0-fde0-11e6-865d-0e3ebc282e83/viz.json', 'pointLinePolygonalMapLayer'],
+                landmarkRateVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/71fdef46-0814-11e7-ab64-0e3ff518bd15/viz.json', 'landmarkRateMapLayer'];
 
             var map = L.map('map', {
                 center: [40.811550, -73.946477],
@@ -183,74 +183,76 @@ angular.module('shnApp')
 
             map.addLayer(baseMapLayer);
 
-
             function createCDBLayer(arr) {
 
                 arr.forEach(function(vizJSON, index) {
 
-                    cdb.createLayer(map, vizJSON, { legends: true })
+                    cdb.createLayer(map, vizJSON[0], { legends: true })
                         .addTo(map)
                         .done(function(layer) {
 
-                            function storeSublayers(prop) {
+                            function storeSublayers() {
+                                allSubLayers[vizJSON[1]] = [];
                                 for (var i = 0; i < layer.getSubLayerCount(); i++) {
                                     layer.getSubLayer(i).hide();
                                     var sublayer = layer.getSubLayer(i);
-                                    allSubLayers[prop].push(sublayer);
+                                    allSubLayers[vizJSON[1]].push([sublayer]);
                                 }
                             }
 
                             storeSublayers();
-                            // (initialSubLayersLength === undefined) ? storeSublayers('choroplethLayers'): storeSublayers('pointLinePolygonalLayers');
 
-                            // function mapSubLayers() {
-                            //     var subLayerData = layer.getSubLayer(0),
-                            //         subLayers = subLayerData._parent.layers,
-                            //         len = Object.keys(indexedSubLayers).length,
-                            //         j;
-                            //     // create  indexed object with matching layerrs_name
-                            //     if (len > 1) {
-                            //         for (j = 0; j < subLayers.length; j++) {
-                            //             indexedSubLayers[len + j] = subLayers[j].options.layer_name;
-                            //         }
-                            //     } else {
-                            //         for (j = 0; j < subLayers.length; j++) {
-                            //             indexedSubLayers[j] = subLayers[j].options.layer_name;
-                            //         }
-                            //         initialSubLayersLength = Object.keys(indexedSubLayers).length;
-                            //     }
+                            function mapSubLayers() {
+                                var subLayerData = layer.getSubLayer(0),
+                                    subLayers = subLayerData._parent.layers;
+                                subLayers.forEach(function(sublayer, index) {
+                                    allSubLayers[vizJSON[1]][index][1] = sublayer.options.layer_name;
+                                });
+                            }
 
-                            // }
+                            function createInfowindows(obj) {
+                                var key, prop;
+                                for (key in obj) {
+                                    if (key === vizJSON[1]) {
+                                        obj[key].forEach(function(mapLayerObject, pos) {
+                                            allSubLayers[key].forEach(function(sublayer, index) {
+                                                console.log(mapLayerObject.displayValue, 'DP');
+                                                console.log(sublayer[1], 'all-dp');
 
-                            // function createInfowindows(obj) {
-                            //     var len = Object.keys(indexedSubLayers).length,
-                            //         prop,
-                            //         i;
+                                                if (mapLayerObject.displayValue === sublayer[1]) {
+                                                    cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(index), mapLayerObject.layerSource, {
+                                                        infowindowTemplate: $(mapLayerObject.modelValue).html(),
+                                                    });
+                                                }
+                                            });
+                                        });
+                                    }
+                                }
 
-                            //     if (len === initialSubLayersLength) {
-                            //         for (prop in indexedSubLayers) {
-                            //             for (i = 0; i < obj.choroplethLayers.length; i++) {
-                            //                 if (indexedSubLayers[prop] === obj.choroplethLayers[i].displayValue) {
-                            //                     cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(prop), obj.choroplethLayers[i].layerSource, {
-                            //                         infowindowTemplate: $(obj.choroplethLayers[i].modelValue).html(),
-                            //                     });
-                            //                 }
-                            //             }
-                            //         }
-                            //     } else {
-                            //         for (prop in indexedSubLayers) {
-                            //             for (i = 0; i < obj.pointLinePolygonalLayers.length; i++) {
-                            //                 if (indexedSubLayers[prop] === obj.pointLinePolygonalLayers[i].displayValue && indexedSubLayers[prop] !== 'NYC Community Districts') {
-                            //                     cdb.vis.Vis.addInfowindow(map, layer.getSubLayer((prop - initialSubLayersLength)), obj.pointLinePolygonalLayers[i].layerSource, {
-                            //                         infowindowTemplate: $(obj.pointLinePolygonalLayers[i].modelValue).html(),
-                            //                     });
-                            //                 }
-                            //             }
-                            //         }
-                            //     }
-                            // }
-                            // mapSubLayers();
-                            // createInfowindows($scope.mapLayers);
+                                // if (len === initialSubLayersLength) {
+                                //     for (prop in indexedSubLayers) {
+                                //         for (i = 0; i < obj.choroplethLayers.length; i++) {
+                                //             if (indexedSubLayers[prop] === obj.choroplethLayers[i].displayValue) {
+                                //                 cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(prop), obj.choroplethLayers[i].layerSource, {
+                                //                     infowindowTemplate: $(obj.choroplethLayers[i].modelValue).html(),
+                                //                 });
+                                //             }
+                                //         }
+                                //     }
+                                // } else {
+                                //     for (prop in indexedSubLayers) {
+                                //         for (i = 0; i < obj.pointLinePolygonalLayers.length; i++) {
+                                //             if (indexedSubLayers[prop] === obj.pointLinePolygonalLayers[i].displayValue && indexedSubLayers[prop] !== 'NYC Community Districts') {
+                                //                 cdb.vis.Vis.addInfowindow(map, layer.getSubLayer((prop - initialSubLayersLength)), obj.pointLinePolygonalLayers[i].layerSource, {
+                                //                     infowindowTemplate: $(obj.pointLinePolygonalLayers[i].modelValue).html(),
+                                //                 });
+                                //             }
+                                //         }
+                                //     }
+                                // }
+                            }
+                            mapSubLayers();
+                            createInfowindows($scope.mapLayers);
                         })
                         .error(function(err) {
                             console.log(err);
@@ -259,7 +261,7 @@ angular.module('shnApp')
                 });
 
             }
-            createCDBLayer([pointLinePolygonalVizJSON]);
+            createCDBLayer([choroplethVizJSON, landmarkRateVizJSON, pointLinePolygonalVizJSON]);
         }
         showProjectInfoModal();
         initMap();

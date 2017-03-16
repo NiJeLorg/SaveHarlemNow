@@ -20,11 +20,15 @@ div(ng-controller='MapCtrl')
         p MAP LAYERS
     .map-layers-content
       .layers-choropleth-layers
-        .map-layer(ng-repeat='layer in mapLayers.choroplethLayers')
+        .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayer')
+          p {{layer.displayValue}}
+          input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)' class='{{layer.modelValue}}')
+      .layers-choropleth-layers.landmark-rate-group
+        .map-layer(ng-repeat='layer in mapLayers.landmarkRateMapLayer')
           p {{layer.displayValue}}
           input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)' class='{{layer.modelValue}}')
       .layers-pointLinePolygonal-layers
-        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalLayers')
+        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer')
           p {{layer.displayValue}}
           input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)')
 
