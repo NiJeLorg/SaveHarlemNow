@@ -42,10 +42,10 @@ angular.module('shnApp')
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'choropleth' },
             ],
             pointLinePolygonalMapLayer: [
-                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_action'], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_actio'], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [], layerType: 'pointLinePolygonal' },
-                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: ['area_name', 'bbl', 'lm_type', 'status_of', 'last_actio'], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'NYC Community Board Districts', modelValue: 'nycCommunityDistricts', layerSource: ['borocd'], layerType: 'pointLinePolygonal' },
@@ -200,7 +200,6 @@ angular.module('shnApp')
                                         allSubLayers[key].forEach(function(sublayer, index) {
                                             for (var i = 0; i < obj[key].length; i++) {
                                                 if (sublayer[1] === obj[key][i].displayValue) {
-                                                    console.log(layer.getSubLayer(index), sublayer[1], index);
                                                     cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(index), obj[key][i].layerSource, {
                                                         infowindowTemplate: $('#' + obj[key][i].modelValue).html(),
                                                     });
