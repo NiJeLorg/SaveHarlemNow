@@ -214,8 +214,9 @@ angular.module('shnApp')
                                         allSubLayers[key].forEach(function(sublayer, index) {
                                             for (var i = 0; i < obj[key].length; i++) {
                                                 if (sublayer[1] === obj[key][i].displayValue) {
+                                                    console.log(layer.getSubLayer(index), sublayer[1], index);
                                                     cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(index), obj[key][i].layerSource, {
-                                                        infowindowTemplate: $(obj[key][i].modelValue).html(),
+                                                        infowindowTemplate: $('#' + obj[key][i].modelValue).html(),
                                                     });
                                                 }
                                             }
