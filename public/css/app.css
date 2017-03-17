@@ -71,7 +71,7 @@ nav {
 
 .map-layers-holder {
   width: 300px;
-  position: absolute;
+  position: fixed;
   top: 120px;
   right: 50px; }
   .map-layers-holder .map-layers-title {
@@ -225,7 +225,8 @@ md-tabs md-ink-bar {
     display: none; }
   .info-nav {
     justify-content: flex-start;
-    margin-left: 20px; }
+    padding-left: 20px;
+    box-sizing: border-box; }
   .bars-nav {
     display: flex; }
   .legend {
