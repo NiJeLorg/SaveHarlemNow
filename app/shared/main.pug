@@ -5,12 +5,14 @@ div(ng-controller='MapCtrl')
   .nav.bars-nav
     i.fa.fa-bars.fa-2x(ng-click='showOverlayNavigation()')
 
+
   .overlay-nav
     .close-overlay
       i.fa.fa-times.fa-2x(ng-click='closeOverlayNavigation()')
     .overlay-content
       p(ng-repeat='layer in mapLayers.choroplethLayers' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
       p(ng-repeat='layer in mapLayers.pointLinePolygonalLayers' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
+
 
   .legends-holder
 
