@@ -42,10 +42,10 @@ angular.module('shnApp')
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'choropleth' },
             ],
             pointLinePolygonalMapLayer: [
-                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['pluto_addr', 'bbl', 'lm_type', 'status', 'last_actio'], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['address', 'landmark_type', 'status', 'bbl', 'last_action'], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [], layerType: 'pointLinePolygonal' },
-                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: [], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: ['name', 'last_action'], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Proposed Historic Districts', modelValue: 'proposedHistoricDistricts', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Proposed Zoning Changes', modelValue: 'proposedZoningChange', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'NYC Community Board Districts', modelValue: 'nycCommunityDistricts', layerSource: ['borocd'], layerType: 'pointLinePolygonal' },
@@ -69,20 +69,6 @@ angular.module('shnApp')
                     });
                 }
             }
-
-            // if (status) {
-            //     for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
-            //         if (layer.modelValue === $scope.mapLayers.choroplethLayers[i].modelValue) {
-
-            //         } else {
-            //             angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', true);
-            //         }
-            //     }
-            // } else {
-            //     for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
-            //         angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', false);
-            //     }
-            // }
 
         }
 
