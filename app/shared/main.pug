@@ -25,9 +25,12 @@ div(ng-controller='MapCtrl')
           p {{layer.displayValue}}
           input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)' class='{{layer.modelValue}}')
       .layers-pointLinePolygonal-layers
-        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer')
-          p {{layer.displayValue}}
-          input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)')
+        .map-layer
+            p {{existingLandmarks.displayValue}}
+            input(type='checkbox' name='{{existingLandmarks}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(existingLandmarks)')
+        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer' ng-if='layer.modelValue !== "existingLandmarks" && layer.modelValue !== "existingHistoricDistricts"')
+            p {{layer.displayValue}}
+            input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)')
 
 
 

@@ -53,6 +53,11 @@ angular.module('shnApp')
             ]
         };
 
+        $scope.existingLandmarks = {
+            displayValue: 'Existing Landmarks',
+            layerType: 'pointLinePolygonal'
+        };
+
         function disableChoroplethInputs(layer, status) {
             if (layer.layerType === 'choropleth') {
                 if (status) {
@@ -73,32 +78,62 @@ angular.module('shnApp')
         }
 
 
+        $scope.toggleExistingLandmarksLayers = function() {
+
+        };
+
         $scope.getMapLayerSelected = function(layer) {
             var prop,
-                key = layer.layerType + 'MapLayer';
+                key = layer.layerType + 'MapLayer',
+                arr = [{ modelValue: 'existingLandmarks', displayValue: 'Existing Landmarks' }, { modelValue: 'existingHistoricDistricts', displayValue: 'Existing Historic Districts' }];
 
-
-            function showMapLayer() {
-                allSubLayers[key].forEach(function(sublayer, index) {
-                    if (sublayer[1] === layer.displayValue) {
-                        sublayer[0].show();
-                        angular.element('.legends-holder').append(legends[layer.modelValue]);
-                    }
-                });
-            }
-
-            function hideMapLayer() {
-                allSubLayers[key].forEach(function(sublayer, index) {
-                    if (sublayer[1] === layer.displayValue) {
-                        sublayer[0].hide();
-                        if (legends[layer.modelValue]) {
-                            legends[layer.modelValue].remove();
+            function showMapLayer(layer) {
+                if (layer.displayValue !== 'Existing Landmarks') {
+                    allSubLayers[key].forEach(function(sublayer, index) {
+                        if (sublayer[1] === layer.displayValue) {
+                            sublayer[0].show();
+                            angular.element('.legends-holder').append(legends[layer.modelValue]);
                         }
-                    }
-                });
+                    });
+                } else {
+                    arr.forEach(function(item, index) {
+                        allSubLayers[key].forEach(function(sublayer, index) {
+                            if (sublayer[1] === item.displayValue) {
+                                sublayer[0].show();
+                                angular.element('.legends-holder').append(legends[item.modelValue]);
+                            }
+                        });
+                    });
+
+                }
             }
 
-            ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(): hideMapLayer();
+            function hideMapLayer(layer) {
+                if (layer.displayValue !== 'Existing Landmarks') {
+                    allSubLayers[key].forEach(function(sublayer, index) {
+                        if (sublayer[1] === layer.displayValue) {
+                            sublayer[0].hide();
+                            if (legends[layer.modelValue]) {
+                                legends[layer.modelValue].remove();
+                            }
+                        }
+                    });
+                } else {
+                    arr.forEach(function(item, index) {
+                        allSubLayers[key].forEach(function(sublayer, index) {
+                            if (sublayer[1] === item.displayValue) {
+                                sublayer[0].hide();
+                                if (legends[item.modelValue]) {
+                                    legends[item.modelValue].remove();
+                                }
+                            }
+                        });
+                    });
+                }
+
+            }
+
+            ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(layer): hideMapLayer(layer);
 
             disableChoroplethInputs(layer, $scope.selectedMapLayers[layer.modelValue]);
         };
