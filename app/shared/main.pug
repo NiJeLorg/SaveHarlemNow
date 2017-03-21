@@ -1,20 +1,4 @@
 div(ng-controller='MapCtrl')
-
-  //- script(type='infowindow/html' id='infowindow_template')
-  //-   .cartodb-popup
-  //-     a.cartodb-popup-close-button.close(href='#close') x
-  //-     .cartodb-popup-content-wrapper
-  //-       .cartodb-popup-content
-  //-     .cartodb-popup-tip-container
-
-  //- script(type='infowindow/html' ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer' id='{{layer.modelValue}}')
-  //-     .cartodb-popup
-  //-       a.cartodb-popup-close-button.close(href='#close') x
-  //-       .cartodb-popup-content-wrapper
-  //-         .cartodb-popup-content
-  //-       .cartodb-popup-tip-container
-
-
   .nav.info-nav
     i.fa.fa-info-circle.fa-2x(ng-click='showAboutInfoModal()')
   .nav.bars-nav
@@ -25,8 +9,8 @@ div(ng-controller='MapCtrl')
     .close-overlay
       i.fa.fa-times.fa-2x(ng-click='closeOverlayNavigation()')
     .overlay-content
-      p(ng-repeat='layer in mapLayers.choroplethLayers' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
-      p(ng-repeat='layer in mapLayers.pointLinePolygonalLayers' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
+      p(ng-repeat='layer in mapLayers.choroplethMapLayer' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
+      p(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
 
 
   .legends-holder
@@ -38,10 +22,6 @@ div(ng-controller='MapCtrl')
     .map-layers-content
       .layers-choropleth-layers
         .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayer')
-          p {{layer.displayValue}}
-          input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)' class='{{layer.modelValue}}')
-      .layers-choropleth-layers.landmark-rate-group
-        .map-layer(ng-repeat='layer in mapLayers.landmarkRateMapLayer')
           p {{layer.displayValue}}
           input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)' class='{{layer.modelValue}}')
       .layers-pointLinePolygonal-layers

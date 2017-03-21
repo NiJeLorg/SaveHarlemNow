@@ -54,20 +54,35 @@ angular.module('shnApp')
         };
 
         function disableChoroplethInputs(layer, status) {
-            var i;
-            if (status) {
-                for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
-                    if (layer.modelValue === $scope.mapLayers.choroplethLayers[i].modelValue) {
-                        angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', false);
-                    } else {
-                        angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', true);
-                    }
-                }
-            } else {
-                for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
-                    angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', false);
+            if (layer.layerType === 'choropleth') {
+                if (status) {
+                    $scope.mapLayers.choroplethMapLayer.forEach(function(mapLayer, index) {
+                        if (mapLayer.modelValue !== layer.modelValue) {
+                            angular.element('.layers-choropleth-layers .' + mapLayer.modelValue).prop('disabled', true);
+                        }
+                    });
+                } else {
+                    $scope.mapLayers.choroplethMapLayer.forEach(function(mapLayer, index) {
+                        if (mapLayer.modelValue !== layer.modelValue) {
+                            angular.element('.layers-choropleth-layers .' + mapLayer.modelValue).prop('disabled', false);
+                        }
+                    });
                 }
             }
+
+            // if (status) {
+            //     for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
+            //         if (layer.modelValue === $scope.mapLayers.choroplethLayers[i].modelValue) {
+
+            //         } else {
+            //             angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', true);
+            //         }
+            //     }
+            // } else {
+            //     for (i = 0; i < $scope.mapLayers.choroplethLayers.length; i++) {
+            //         angular.element('.layers-choropleth-layers .' + $scope.mapLayers.choroplethLayers[i].modelValue).prop('disabled', false);
+            //     }
+            // }
 
         }
 
@@ -90,12 +105,16 @@ angular.module('shnApp')
                 allSubLayers[key].forEach(function(sublayer, index) {
                     if (sublayer[1] === layer.displayValue) {
                         sublayer[0].hide();
-                        legends[layer.modelValue].remove();
+                        if (legends[layer.modelValue]) {
+                            legends[layer.modelValue].remove();
+                        }
                     }
                 });
             }
 
             ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(): hideMapLayer();
+
+            disableChoroplethInputs(layer, $scope.selectedMapLayers[layer.modelValue]);
         };
 
         $scope.showOverlayNavigation = function() {
