@@ -23,7 +23,7 @@ div(ng-controller='MapCtrl')
       .layers-choropleth-layers
         .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayer')
           p {{layer.displayValue}}
-          input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)' class='{{layer.modelValue}}')
+          input(type='radio' name='choropleth' value='{{layer.modelValue}}' ng-model='selectedChroplethMapLayer' ng-click='turnOnChoroplethMapLayer(layer)' class='{{layer.modelValue}}')
       .layers-pointLinePolygonal-layers
         .map-layer
             p {{existingLandmarks.displayValue}}

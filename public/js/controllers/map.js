@@ -9,6 +9,7 @@ angular.module('shnApp')
 
         $scope.disabledInputs = {};
         $scope.selectedMapLayers = {};
+        $scope.selectedChroplethMapLayer = '';
         var
             builtFar = angular.element('<div class="legend" id="builtFar"><div class="title"><p>Built FAR</p></div><div class="range"><p>0</p><p>7.40</p></div><div class="bar built-far-bar"></div></div>'),
             landUse = angular.element('<div class="legend" id="landUse"><div class="title">Land Use</div><div class="range"><p>02</p><span style="background: #5f4690"></span></div><div class="range"><p>04</p><span style="background: #1D6996"></span></div><div class="range"><p>05</p><span style="background: #38A6A5"></span></div><div class="range"><p>03</p><span style="background: #0F8252"></span></div><div class="range"><p>01</p><span style="background: #73AF48"></span></div><div class="range"><p>08</p><span style="background: #EDAD08"></span></div><div class="range"><p>11</p><span style="background: #E17C05"></span></div><div class="range"><p>06</p><span style="background: #CC503E"></span></div><div class="range"><p>10</p><span style="background: #8F326B"></span></div><div class="range"><p>07</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
@@ -58,29 +59,23 @@ angular.module('shnApp')
             layerType: 'pointLinePolygonal'
         };
 
-        function disableChoroplethInputs(layer, status) {
-            if (layer.layerType === 'choropleth') {
-                if (status) {
-                    $scope.mapLayers.choroplethMapLayer.forEach(function(mapLayer, index) {
-                        if (mapLayer.modelValue !== layer.modelValue) {
-                            angular.element('.layers-choropleth-layers .' + mapLayer.modelValue).prop('disabled', true);
-                        }
-                    });
+
+
+        $scope.turnOnChoroplethMapLayer = function(layer) {
+            var key = layer.layerType + 'MapLayer';
+            allSubLayers[key].forEach(function(sublayer, index) {
+                if (sublayer[1] === layer.displayValue) {
+                    sublayer[0].show();
+                    if (angular.element('.legends-holder').children().length > 0) {
+                        angular.element('.legends-holder').children()[0].remove();
+                    }
+                    angular.element('.legends-holder').append(legends[layer.modelValue]);
                 } else {
-                    $scope.mapLayers.choroplethMapLayer.forEach(function(mapLayer, index) {
-                        if (mapLayer.modelValue !== layer.modelValue) {
-                            angular.element('.layers-choropleth-layers .' + mapLayer.modelValue).prop('disabled', false);
-                        }
-                    });
+                    sublayer[0].hide();
                 }
-            }
-
-        }
-
-
-        $scope.toggleExistingLandmarksLayers = function() {
-
+            });
         };
+
 
         $scope.getMapLayerSelected = function(layer) {
             var prop,
@@ -130,12 +125,11 @@ angular.module('shnApp')
                         });
                     });
                 }
-
             }
 
-            ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(layer): hideMapLayer(layer);
+            showMapLayer(layer);
+            // ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(layer): hideMapLayer(layer);
 
-            disableChoroplethInputs(layer, $scope.selectedMapLayers[layer.modelValue]);
         };
 
         $scope.showOverlayNavigation = function() {
@@ -191,6 +185,12 @@ angular.module('shnApp')
                 });
             }
         }
+
+
+        $('.overlay-content p').click(function() {
+            console.log('i might');
+            $('.overlay-content p').css('color', 'yellow');
+        });
 
         function initMap() {
             var choroplethVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/dd3b212e-fdde-11e6-adbd-0e3ebc282e83/viz.json', 'choroplethMapLayer'],
