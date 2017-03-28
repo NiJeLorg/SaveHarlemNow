@@ -4,7 +4,8 @@ angular.module('shnApp')
             indexedSubLayers = {},
             allSubLayers = {},
             initialSubLayersLength,
-            choroplethInputs;
+            choroplethInputs,
+            map;
 
 
         $scope.disabledInputs = {};
@@ -14,6 +15,7 @@ angular.module('shnApp')
             builtFar = angular.element('<div class="legend" id="builtFar"><div class="title"><p>Built FAR</p></div><div class="range"><p>0</p><p>7.40</p></div><div class="bar built-far-bar"></div></div>'),
             landUse = angular.element('<div class="legend" id="landUse"><div class="title">Land Use</div><div class="range"><p>02</p><span style="background: #5f4690"></span></div><div class="range"><p>04</p><span style="background: #1D6996"></span></div><div class="range"><p>05</p><span style="background: #38A6A5"></span></div><div class="range"><p>03</p><span style="background: #0F8252"></span></div><div class="range"><p>01</p><span style="background: #73AF48"></span></div><div class="range"><p>08</p><span style="background: #EDAD08"></span></div><div class="range"><p>11</p><span style="background: #E17C05"></span></div><div class="range"><p>06</p><span style="background: #CC503E"></span></div><div class="range"><p>10</p><span style="background: #8F326B"></span></div><div class="range"><p>07</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
             zoning = angular.element('<div class="legend" id="zoning"><div class="title">Zoning</div><div class="range"><p>R7-2</p><span style="background: #5f4690"></span></div><div class="range"><p>R8-B</p><span style="background: #1D6996"></span></div><div class="range"><p>R7A</p><span style="background: #38A6A5"></span></div><div class="range"><p>R8</p><span style="background: #0F8252"></span></div><div class="range"><p>C6-2A</p><span style="background: #73AF48"></span></div><div class="range"><p>R6</p><span style="background: #EDAD08"></span></div><div class="range"><p>R8A</p><span style="background: #E17C05"></span></div><div class="range"><p>R7B</p><span style="background: #CC503E"></span></div><div class="range"><p>R6A</p><span style="background: #8F326B"></span></div><div class="range"><p>R10</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
+            pluralityGroupsPercentOfPopulation = angular.element('<div class="legend" id="pluralityGroupsPercentOfPopulation"><div class="title"><p>Plurality Group\'s Percent of Population</div><div class="title"><p>White</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-white-bar"></div><div class="title"><p>Black</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-black-bar"></div><div class="title"><p>Asian</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-asian-bar"></div><div class="title"><p>Latino</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-latino-bar"></div><div class="title"><p>Two Plus</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-two-plus-bar"></div></div>'),
             existingLandmarks = angular.element('<div class="legend" id="existingLandmarks"><div class="title"><p>Existing Landmarks</p></div><div class="range"><p>Landmarks</p><span style="background: #2562A2"></span></div></div>'),
             existingHistoricDistricts = angular.element('<div class="legend" id="existingHistoricDistricts"><div class="title"><p>Existing Historic Districts</p></div><div class="range"><p>Existing Historic Districts</p><span style="background: #FC6B21"></span></div></div>'),
             nycCommunityDistricts = angular.element('<div class="legend" id="nycCommunityDistricts"><div class="title"><p>NYC Community Districts</p></div><div class="range"><p>NYC Community Districts</p><span style="background: #FDD130"></span></div></div>'),
@@ -23,10 +25,11 @@ angular.module('shnApp')
             builtFar: builtFar,
             landUse: landUse,
             zoning: zoning,
+            pluralityGroupsPercentOfPopulation: pluralityGroupsPercentOfPopulation,
             existingLandmarks: existingLandmarks,
             existingHistoricDistricts: existingHistoricDistricts,
             nycCommunityDistricts: nycCommunityDistricts,
-            subwayLines: subwayLines
+            subwayLines: subwayLines,
         };
 
 
@@ -43,7 +46,7 @@ angular.module('shnApp')
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'choropleth' },
             ],
             pointLinePolygonalMapLayer: [
-                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['address', 'landmark_type', 'status', 'bbl', 'last_action'], layerType: 'pointLinePolygonal' },
+                { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['address', 'landmark_type', 'status', 'bbl', 'last_action', 'link_to_pdf_document'], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Proposed Landmarks', modelValue: 'proposedLandmarks', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Landmarks At Risk', modelValue: 'landmarksAtRisk', layerSource: [], layerType: 'pointLinePolygonal' },
                 { displayValue: 'Existing Historic Districts', modelValue: 'existingHistoricDistricts', layerSource: ['name', 'last_action'], layerType: 'pointLinePolygonal' },
@@ -60,6 +63,14 @@ angular.module('shnApp')
         };
 
 
+
+        $scope.zoomToHarlem = function() {
+            map.setView([40.811550, -73.946477], 15);
+        };
+
+        $scope.zoomToAllManhattan = function() {
+            map.setView([40.776355, -73.959961], 12);
+        };
 
         $scope.turnOnChoroplethMapLayer = function(layer) {
             var key = layer.layerType + 'MapLayer';
@@ -197,7 +208,7 @@ angular.module('shnApp')
                 pointLinePolygonalVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/4b650ba0-fde0-11e6-865d-0e3ebc282e83/viz.json', 'pointLinePolygonalMapLayer'];
 
 
-            var map = L.map('map', {
+            map = L.map('map', {
                 center: [40.811550, -73.946477],
                 zoom: 16,
             });

@@ -178,6 +178,24 @@ md-tabs md-ink-bar {
       margin: 8px 0;
       transition: 0.2s; }
 
+.zoom-out-buttons {
+  position: absolute;
+  z-index: 2;
+  left: 10px;
+  top: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .zoom-out-buttons button {
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 0px; }
+    .zoom-out-buttons button img {
+      width: 60px; }
+  .zoom-out-buttons .twoAndThree-button {
+    margin-bottom: 10px; }
+
 .legends-holder {
   position: absolute;
   z-index: 2;
@@ -209,7 +227,8 @@ md-tabs md-ink-bar {
   .legend .bar {
     width: 100%;
     height: 8px;
-    border-radius: 4px; }
+    border-radius: 4px;
+    margin-bottom: 10px; }
   .legend .median-household-income-bar {
     background: linear-gradient(90deg, #edf8fb, #b3e2e2, #6ac1a4, #33a161, #0c6c2f); }
   .legend .percent-female-bar {
@@ -220,6 +239,16 @@ md-tabs md-ink-bar {
     background: linear-gradient(90deg, #ffc6c4, #ee919b, #cc607d, #9e3963, #672044); }
   .legend .percent-owner-occupied-bar {
     background: linear-gradient(90deg, #ffc6c4, #ee919b, #cc607d, #9e3963, #672044); }
+  .legend .plurality-white-bar {
+    background: linear-gradient(90deg, #ffc6c4, #ee919b, #cc607d, #9e3963, #672044); }
+  .legend .plurality-black-bar {
+    background: linear-gradient(90deg, #E4F1E1, #9CCDC1, #63A6A0, #337F7F, #0D585F); }
+  .legend .plurality-asian-bar {
+    background: linear-gradient(90deg, #f3e0f7, #dbbaed, #b998dd, #9178c4, #63589f); }
+  .legend .plurality-latino-bar {
+    background: linear-gradient(90deg, #f1eef6, #bdc9e1, #74a9cf, #2b8cbe, #045a8d); }
+  .legend .plurality-two-plus-bar {
+    background: linear-gradient(90deg, #f7f7f7, #cccccc, #969696, #636363, #252525); }
 
 @media (max-width: 425px) {
   .map-layers-holder {

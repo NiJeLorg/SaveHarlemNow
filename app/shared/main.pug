@@ -12,6 +12,12 @@ div(ng-controller='MapCtrl')
       p(ng-repeat='layer in mapLayers.choroplethMapLayer' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
       p(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer' ng-click='getMapLayerSelectedMobile(layer)') {{layer.displayValue}}
 
+  .zoom-out-buttons
+    button.twoAndThree-button(title='The 2/3 Express train to Harlem! Click here to zoom to Harlem.' ng-click='zoomToHarlem()')
+      img(src='images/2and3.png')
+    button(title='Click here to zoom to all of Mahattan.' ng-click='zoomToAllManhattan()')
+      img(src='images/manhattan_shn.png')
+
 
   .legends-holder
 

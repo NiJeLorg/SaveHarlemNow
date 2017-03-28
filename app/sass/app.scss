@@ -192,6 +192,28 @@ md-tabs md-ink-bar {
     }
 }
 
+.zoom-out-buttons {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    top: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button {
+        background: transparent;
+        outline: none;
+        border: none;
+        padding: 0px;
+        img {
+            width: 60px;
+        }
+    }
+    .twoAndThree-button {
+        margin-bottom: 10px;
+    }
+}
+
 .legends-holder {
     position: absolute;
     z-index: 2;
@@ -229,6 +251,7 @@ md-tabs md-ink-bar {
         width: 100%;
         height: 8px;
         border-radius: 4px;
+        margin-bottom: 10px;
     }
     .median-household-income-bar {
         background: linear-gradient(90deg, #edf8fb, #b3e2e2, #6ac1a4, #33a161, #0c6c2f);
@@ -244,6 +267,21 @@ md-tabs md-ink-bar {
     }
     .percent-owner-occupied-bar {
         background: linear-gradient(90deg, #ffc6c4, #ee919b, #cc607d, #9e3963, #672044);
+    }
+    .plurality-white-bar {
+        background: linear-gradient(90deg, #ffc6c4, #ee919b, #cc607d, #9e3963, #672044);
+    }
+    .plurality-black-bar {
+        background: linear-gradient(90deg, #E4F1E1, #9CCDC1, #63A6A0, #337F7F, #0D585F);
+    }
+    .plurality-asian-bar {
+        background: linear-gradient(90deg, #f3e0f7, #dbbaed, #b998dd, #9178c4, #63589f);
+    }
+    .plurality-latino-bar {
+        background: linear-gradient(90deg, #f1eef6, #bdc9e1, #74a9cf, #2b8cbe, #045a8d);
+    }
+    .plurality-two-plus-bar {
+        background: linear-gradient(90deg, #f7f7f7, #cccccc, #969696, #636363, #252525);
     }
 }
 
