@@ -138,8 +138,8 @@ angular.module('shnApp')
                 }
             }
 
-            showMapLayer(layer);
-            // ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(layer): hideMapLayer(layer);
+            // showMapLayer(layer);
+            ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(layer): hideMapLayer(layer);
 
         };
 
