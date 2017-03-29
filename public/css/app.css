@@ -233,8 +233,8 @@ md-tabs md-ink-bar {
     background: linear-gradient(90deg, #edf8fb, #b3e2e2, #6ac1a4, #33a161, #0c6c2f); }
   .legend .percent-female-bar {
     background: linear-gradient(90deg, #ffc6c4, #ee919b, #cc607d, #9e3963, #672044); }
-  .legend .built-far-bar {
-    background: linear-gradient(90deg, #dfd7f8, #907cd6, #5a3dcb, #462ac2, #341d99); }
+  .legend .development-potential-bar {
+    background: linear-gradient(90deg, #f9ddda, #f2b9c4, #e597b9, #ce78b3, #ad5fad, #834ba0, #573b88); }
   .legend .median-age-bar {
     background: linear-gradient(90deg, #ffc6c4, #ee919b, #cc607d, #9e3963, #672044); }
   .legend .percent-owner-occupied-bar {

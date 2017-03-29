@@ -12,22 +12,22 @@ angular.module('shnApp')
         $scope.selectedMapLayers = {};
         $scope.selectedChroplethMapLayer = '';
         var
-            builtFar = angular.element('<div class="legend" id="builtFar"><div class="title"><p>Built FAR</p></div><div class="range"><p>0</p><p>7.40</p></div><div class="bar built-far-bar"></div></div>'),
+            developmentPotential = angular.element('<div class="legend" id="developmentPotential"><div class="title"><p>AVAILABLE FAR</p></div><div class="range"><p>0</p><p>40</p></div><div class="bar development-potential-bar"></div></div>'),
             landUse = angular.element('<div class="legend" id="landUse"><div class="title">Land Use</div><div class="range"><p>02</p><span style="background: #5f4690"></span></div><div class="range"><p>04</p><span style="background: #1D6996"></span></div><div class="range"><p>05</p><span style="background: #38A6A5"></span></div><div class="range"><p>03</p><span style="background: #0F8252"></span></div><div class="range"><p>01</p><span style="background: #73AF48"></span></div><div class="range"><p>08</p><span style="background: #EDAD08"></span></div><div class="range"><p>11</p><span style="background: #E17C05"></span></div><div class="range"><p>06</p><span style="background: #CC503E"></span></div><div class="range"><p>10</p><span style="background: #8F326B"></span></div><div class="range"><p>07</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
             zoning = angular.element('<div class="legend" id="zoning"><div class="title">Zoning</div><div class="range"><p>R7-2</p><span style="background: #5f4690"></span></div><div class="range"><p>R8-B</p><span style="background: #1D6996"></span></div><div class="range"><p>R7A</p><span style="background: #38A6A5"></span></div><div class="range"><p>R8</p><span style="background: #0F8252"></span></div><div class="range"><p>C6-2A</p><span style="background: #73AF48"></span></div><div class="range"><p>R6</p><span style="background: #EDAD08"></span></div><div class="range"><p>R8A</p><span style="background: #E17C05"></span></div><div class="range"><p>R7B</p><span style="background: #CC503E"></span></div><div class="range"><p>R6A</p><span style="background: #8F326B"></span></div><div class="range"><p>R10</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
             pluralityGroupsPercentOfPopulation = angular.element('<div class="legend" id="pluralityGroupsPercentOfPopulation"><div class="title"><p>Plurality Group\'s Percent of Population</div><div class="title"><p>White</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-white-bar"></div><div class="title"><p>Black</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-black-bar"></div><div class="title"><p>Asian</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-asian-bar"></div><div class="title"><p>Latino</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-latino-bar"></div><div class="title"><p>Two Plus</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-two-plus-bar"></div></div>'),
-            existingLandmarks = angular.element('<div class="legend" id="existingLandmarks"><div class="title"><p>Existing Landmarks</p></div><div class="range"><p>Landmarks</p><span style="background: #2562A2"></span></div></div>'),
-            existingHistoricDistricts = angular.element('<div class="legend" id="existingHistoricDistricts"><div class="title"><p>Existing Historic Districts</p></div><div class="range"><p>Existing Historic Districts</p><span style="background: #FC6B21"></span></div></div>'),
+            inappropriateZoning = angular.element('<div class="legend" id="inappropriateZoning"><div class="title"><p>Inappropriate Zoning</p></div><div class="range"><p>Zoned R7A and available FAR > 5</p><span style="background: #382C9C"></span></div></div>'),
+            existingLandmarks = angular.element('<div class="legend" id="existingLandmarks"><div class="title"><p>Existing Landmarks</p></div><div class="title"><p style="color: #979EA1">LANDMARK TYPE</p></div><div class="range"><p>INDIVIDUAL LANDMARK</p><span style="background: #E600A9"></span></div><div class="range"><p>INTERIOR LANDMARK</p><span style="background: #0070FF"></span></div><div class="range"><p>SCENIC LANDMARK</p><span style="background: #267300"></span></div></div>'),
             nycCommunityDistricts = angular.element('<div class="legend" id="nycCommunityDistricts"><div class="title"><p>NYC Community Districts</p></div><div class="range"><p>NYC Community Districts</p><span style="background: #FDD130"></span></div></div>'),
             subwayLines = angular.element('<div class="legend" id="subwayLines"><div class="title"><p>Subway Lines</p></div><div class="range"><p>B-D-F-M</p><span style="background: #ED703A"></span></div><div class="range"><p>A-C-E</p><span style="background: #0046A4"></span></div><div class="range"><p>4-5-6</p><span style="background: #468C3B"></span></div><div class="range"><p>N-Q-R-W</p><span style="background: #F4C733"></span></div><div class="range"><p>1-2-3</p><span style="background: #DB4E42"></span></div><div class="range"><p>J-Z</p><span style="background: #916639"></span></div><div class="range"><p>L-S</p><span style="background: #A5A7AA"></span></div><div class="range"><p>G</p><span style="background: #84B647"></span></div><div class="range"><p>7</p><span style="background: #A850AD"></span></div></div>');
 
         var legends = {
-            builtFar: builtFar,
+            developmentPotential: developmentPotential,
             landUse: landUse,
             zoning: zoning,
             pluralityGroupsPercentOfPopulation: pluralityGroupsPercentOfPopulation,
+            inappropriateZoning: inappropriateZoning,
             existingLandmarks: existingLandmarks,
-            existingHistoricDistricts: existingHistoricDistricts,
             nycCommunityDistricts: nycCommunityDistricts,
             subwayLines: subwayLines,
         };
@@ -35,8 +35,8 @@ angular.module('shnApp')
 
         $scope.mapLayers = {
             choroplethMapLayer: [{
-                    displayValue: 'Built FAR',
-                    modelValue: 'builtFar',
+                    displayValue: 'Development Potential',
+                    modelValue: 'developmentPotential',
                     layerSource: ['built_far_over_max_far', 'built_far', 'residential_far', 'commercial_far', 'facility_far', 'address', 'bbl'],
                     layerType: 'choropleth',
                 },
@@ -44,6 +44,7 @@ angular.module('shnApp')
                 { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'], layerType: 'choropleth' },
                 { displayValue: 'Plurality Group\'s Percent of Population', modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: [], layerType: 'choropleth' },
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [], layerType: 'choropleth' },
+                { displayValue: 'Inappropriate Zoning', modelValue: 'inappropriateZoning', layerSource: ['built_far_over_max_far', 'built_far', 'residential_far', 'commercial_far', 'facility_far', 'address', 'bbl'], layerType: 'choropleth' },
             ],
             pointLinePolygonalMapLayer: [
                 { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['address', 'landmark_type', 'status', 'bbl', 'last_action', 'link_to_pdf_document'], layerType: 'pointLinePolygonal' },
@@ -262,6 +263,7 @@ angular.module('shnApp')
                             }
 
                             mapSubLayers($scope.mapLayers);
+                            console.log(allSubLayers, 'allSubLayers');
                         })
                         .error(function(err) {
                             console.log(err);
