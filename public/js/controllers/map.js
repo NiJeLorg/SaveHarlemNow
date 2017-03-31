@@ -12,11 +12,11 @@ angular.module('shnApp')
         $scope.selectedMapLayers = {};
         $scope.selectedChroplethMapLayer = '';
         var
-            developmentPotential = angular.element('<div class="legend" id="developmentPotential"><div class="title"><p>AVAILABLE FAR</p></div><div class="range"><p>0</p><p>40</p></div><div class="bar development-potential-bar"></div></div>'),
-            landUse = angular.element('<div class="legend" id="landUse"><div class="title">Land Use</div><div class="range"><p>Family Walk- Up Buildings</p><span style="background: #5f4690"></span></div><div class="range"><p>Mixed Residential and Commercial Buildings</p><span style="background: #1D6996"></span></div><div class="range"><p>Commercial and Office Buildings</p><span style="background: #38A6A5"></span></div><div class="range"><p> Family Elevator Buildings</p><span style="background: #0F8252"></span></div><div class="range"><p>One & Two Family Buildings </p><span style="background: #73AF48"></span></div><div class="range"><p>Public Facilities and Institutions</p><span style="background: #EDAD08"></span></div><div class="range"><p>Vacant Land</p><span style="background: #E17C05"></span></div><div class="range"><p>Industrial and Manufacturing</p><span style="background: #CC503E"></span></div><div class="range"><p>Parking Facilities</p><span style="background: #8F326B"></span></div><div class="range"><p>Transportation and Utility</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
-            zoning = angular.element('<div class="legend" id="zoning"><div class="title">Zoning</div><div class="range"><p>R7-2</p><span style="background: #5f4690"></span></div><div class="range"><p>R8-B</p><span style="background: #1D6996"></span></div><div class="range"><p>R7A</p><span style="background: #38A6A5"></span></div><div class="range"><p>R8</p><span style="background: #0F8252"></span></div><div class="range"><p>C6-2A</p><span style="background: #73AF48"></span></div><div class="range"><p>R6</p><span style="background: #EDAD08"></span></div><div class="range"><p>R8A</p><span style="background: #E17C05"></span></div><div class="range"><p>R7B</p><span style="background: #CC503E"></span></div><div class="range"><p>R6A</p><span style="background: #8F326B"></span></div><div class="range"><p>R10</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
-            pluralityGroupsPercentOfPopulation = angular.element('<div class="legend" id="pluralityGroupsPercentOfPopulation"><div class="title"><p>Plurality Group\'s Percent of Population</div><div class="title"><p>White</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-white-bar"></div><div class="title"><p>Black</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-black-bar"></div><div class="title"><p>Asian</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-asian-bar"></div><div class="title"><p>Latino</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-latino-bar"></div><div class="title"><p>Two Plus</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-two-plus-bar"></div></div>'),
-            inappropriateZoning = angular.element('<div class="legend" id="inappropriateZoning"><div class="title"><p>Inappropriate Zoning</p></div><div class="range"><p>Zoned R7A and available FAR > 5</p><span style="background: #382C9C"></span></div></div>'),
+            developmentPotential = angular.element('<div class="legend " id="developmentPotential"><div class="title"><p>AVAILABLE FAR</p></div><div class="range"><p>0</p><p>40</p></div><div class="bar development-potential-bar"></div></div>'),
+            landUse = angular.element('<div class="legend " id="landUse"><div class="title">Land Use</div><div class="range"><p>Family Walk- Up Buildings</p><span style="background: #5f4690"></span></div><div class="range"><p>Mixed Residential and Commercial Buildings</p><span style="background: #1D6996"></span></div><div class="range"><p>Commercial and Office Buildings</p><span style="background: #38A6A5"></span></div><div class="range"><p> Family Elevator Buildings</p><span style="background: #0F8252"></span></div><div class="range"><p>One & Two Family Buildings </p><span style="background: #73AF48"></span></div><div class="range"><p>Public Facilities and Institutions</p><span style="background: #EDAD08"></span></div><div class="range"><p>Vacant Land</p><span style="background: #E17C05"></span></div><div class="range"><p>Industrial and Manufacturing</p><span style="background: #CC503E"></span></div><div class="range"><p>Parking Facilities</p><span style="background: #8F326B"></span></div><div class="range"><p>Transportation and Utility</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
+            zoning = angular.element('<div class="legend " id="zoning"><div class="title">Zoning</div><div class="range"><p>R7-2</p><span style="background: #5f4690"></span></div><div class="range"><p>R8-B</p><span style="background: #1D6996"></span></div><div class="range"><p>R7A</p><span style="background: #38A6A5"></span></div><div class="range"><p>R8</p><span style="background: #0F8252"></span></div><div class="range"><p>C6-2A</p><span style="background: #73AF48"></span></div><div class="range"><p>R6</p><span style="background: #EDAD08"></span></div><div class="range"><p>R8A</p><span style="background: #E17C05"></span></div><div class="range"><p>R7B</p><span style="background: #CC503E"></span></div><div class="range"><p>R6A</p><span style="background: #8F326B"></span></div><div class="range"><p>R10</p><span style="background: #6F4070"></span></div><div class="range"><p>OTHERS</p><span style="background: #6E6E6E"></span></div></div>'),
+            pluralityGroupsPercentOfPopulation = angular.element('<div class="legend " id="pluralityGroupsPercentOfPopulation"><div class="title"><p>Plurality Group\'s Percent of Population</div><div class="title"><p>White</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-white-bar"></div><div class="title"><p>Black</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-black-bar"></div><div class="title"><p>Asian</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-asian-bar"></div><div class="title"><p>Latino</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-latino-bar"></div><div class="title"><p>Two Plus</p></div><div class="range"><p>0</p><p>100</p></div><div class="bar plurality-two-plus-bar"></div></div>'),
+            inappropriateZoning = angular.element('<div class="legend " id="inappropriateZoning"><div class="title"><p>Inappropriate Zoning</p></div><div class="range"><p>Zoned R7A and available FAR > 5</p><span style="background: #382C9C"></span></div></div>'),
             existingLandmarks = angular.element('<div class="legend" id="existingLandmarks"><div class="title"><p>Existing Landmarks</p></div><div class="title"><p style="color: #979EA1">LANDMARK TYPE</p></div><div class="range"><p>INDIVIDUAL LANDMARK</p><span style="background: #E600A9"></span></div><div class="range"><p>INTERIOR LANDMARK</p><span style="background: #0070FF"></span></div><div class="range"><p>SCENIC LANDMARK</p><span style="background: #267300"></span></div></div>'),
             existingHistoricDistricts = angular.element('<div class="legend" id="existingHistoricDistricts"><div class="title"><p>Existing Historic Districts</p></div><div class="range"><p>DESIGNATED</p><span style="background: #FFCC00"></span></div><div class="range"><p>CALENDARED</p><span style="background: #FC6B21"></span></div><div class="range"><p>HEARD</p><span style="background: #38A6A5"></span></div></div>'),
             nycCommunityDistricts = angular.element('<div class="legend" id="nycCommunityDistricts"><div class="title"><p>NYC Community Districts</p></div><div class="range"><p>NYC Community Districts</p><span style="background: #FDD130"></span></div></div>'),
@@ -76,7 +76,14 @@ angular.module('shnApp')
         };
 
         $scope.turnOnChoroplethMapLayer = function(layer) {
-            var key = layer.layerType + 'MapLayer';
+            var key = layer.layerType + 'MapLayer',
+                elemId;
+
+            function alterString(str) {
+                str = str.replace(/\s+/g, '').replace(/'/, '');
+                return str.substr(0, 1).toLowerCase() + str.substr(1);
+            };
+
             allSubLayers[key].forEach(function(sublayer, index) {
                 if (sublayer[1] === layer.displayValue) {
                     sublayer[0].show();
@@ -86,6 +93,8 @@ angular.module('shnApp')
                     angular.element('.legends-holder').append(legends[layer.modelValue]);
                 } else {
                     sublayer[0].hide();
+                    elemId = '.legends-holder' + ' #' + alterString(sublayer[1]);
+                    angular.element(elemId).remove();
                 }
             });
         };
@@ -265,7 +274,6 @@ angular.module('shnApp')
                             }
 
                             mapSubLayers($scope.mapLayers);
-                            console.log(allSubLayers, 'allSubLayers');
                         })
                         .error(function(err) {
                             console.log(err);
