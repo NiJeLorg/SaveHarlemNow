@@ -27,13 +27,7 @@ angular.module('shnApp')
         };
 
         $scope.turnOnChoroplethMapLayer = function(layer) {
-            var key = Object.keys(allSubLayers)[0],
-                elemId;
-
-            var alterString = function(str) {
-                str = str.replace(/\s+/g, '').replace(/'/, '');
-                return str.substr(0, 1).toLowerCase() + str.substr(1);
-            };
+            var key = Object.keys(allSubLayers)[0];
 
             allSubLayers[key].forEach(function(sublayer, index) {
                 if (sublayer[1] === layer.displayValue) {
@@ -46,6 +40,7 @@ angular.module('shnApp')
                     sublayer[0].hide();
                 }
             });
+
         };
 
 
@@ -90,8 +85,8 @@ angular.module('shnApp')
                         allSubLayers[key].forEach(function(sublayer, index) {
                             if (sublayer[1] === item.displayValue) {
                                 sublayer[0].hide();
-                                if (legends[item.modelValue]) {
-                                    legends[item.modelValue].remove();
+                                if (legendDOMElements[item.modelValue]) {
+                                    legendDOMElements[item.modelValue].remove();
                                 }
                             }
                         });
@@ -99,7 +94,6 @@ angular.module('shnApp')
                 }
             }
 
-            // showMapLayer(layer);
             ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(layer): hideMapLayer(layer);
 
         };
@@ -112,6 +106,11 @@ angular.module('shnApp')
         $scope.closeOverlayNavigation = function() {
             $('.overlay-nav').css('width', '0');
             $('.overlay-nav .overlay-content p').css('opacity', '0');
+        };
+
+        $scope.selectChoroplethMapLayerMobile = function(layer) {
+            $scope.turnOnChoroplethMapLayer(layer);
+            $scope.closeOverlayNavigation();
         };
 
         $scope.getMapLayerSelectedMobile = function(layer) {
@@ -167,10 +166,10 @@ angular.module('shnApp')
         }
 
 
-        $('.overlay-content p').click(function() {
-            console.log('i might');
-            $('.overlay-content p').css('color', 'yellow');
-        });
+        // $('.overlay-content p').click(function() {
+        //     console.log('i might');
+        //     $('.overlay-content p').css('color', 'yellow');
+        // });
 
         function initMap() {
             var choroplethVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/dd3b212e-fdde-11e6-adbd-0e3ebc282e83/viz.json', 'choroplethMapLayer'],
