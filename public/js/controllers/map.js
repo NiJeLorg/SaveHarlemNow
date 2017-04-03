@@ -147,7 +147,15 @@ angular.module('shnApp')
             });
         };
 
-        function showProjectInfoModal() {
+        $scope.showProjectInfoModal = function() {
+            $mdDialog.show({
+                controller: ProjectInfoModalController,
+                templateUrl: 'views/project-info-modal.html',
+                clickOutsideToClose: true,
+            });
+        };
+
+        function showProjectInfoModalOnPageLoad() {
             var status = localStorage.closeProjectInfoModal;
             if (!status) {
                 $mdDialog.show({
@@ -231,6 +239,6 @@ angular.module('shnApp')
             }
             createCDBLayer([choroplethVizJSON, pointLinePolygonalVizJSON]);
         }
-        showProjectInfoModal();
+        showProjectInfoModalOnPageLoad();
         initMap();
     });

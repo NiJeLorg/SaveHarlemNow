@@ -261,4 +261,10 @@ md-tabs md-ink-bar {
   .bars-nav {
     display: flex; }
   .legend {
-    display: none; } }
+    display: none; }
+  .project-info-modal {
+    width: 100%;
+    padding: 0 15px; }
+    .project-info-modal .content {
+      margin-bottom: 0;
+      font-size: 14px; } }

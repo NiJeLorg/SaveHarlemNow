@@ -301,4 +301,12 @@ md-tabs md-ink-bar {
     .legend {
         display: none;
     }
+    .project-info-modal {
+        width: 100%;
+        padding: 0 15px;
+        .content {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+    }
 }
