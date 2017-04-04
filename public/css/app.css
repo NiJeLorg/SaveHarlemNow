@@ -205,7 +205,7 @@ md-tabs md-ink-bar {
   box-shadow: rgba(0, 0, 0, 0.239216) 0px 2px 4px 0px;
   border-radius: 4px;
   max-height: 540px;
-  overflow-y: scroll; }
+  overflow-y: auto; }
 
 .legend {
   padding: 16px;
