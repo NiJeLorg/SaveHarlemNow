@@ -2,6 +2,8 @@
 const express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
+    favicon = require('serve-favicon'),
+    path = require('path'),
     envVar = require('dotenv').config(),
     app = express();
 
@@ -17,6 +19,8 @@ app.get('/', function(req, res) {
         root: 'public'
     });
 });
+
+app.use(favicon(path.join(__dirname + '/favicon.ico')));
 
 // start the server
 app.listen(process.env.PORT || envVar.parsed.PORT);
