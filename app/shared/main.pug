@@ -8,9 +8,9 @@ div(ng-controller='MapCtrl')
     .close-overlay
       i.fa.fa-times.fa-2x(ng-click='closeOverlayNavigation()')
     .overlay-content
-      p(ng-repeat='layer in mapLayers.choroplethMapLayers' ng-click='selectChoroplethMapLayerMobile(layer)') {{layer.displayValue}}
+      p(ng-repeat='layer in mapLayers.choroplethMapLayer' ng-click='selectChoroplethMapLayerMobile(layer)') {{layer.displayValue}}
       p(ng-click='getMapLayerSelectedMobile(existingLandmarks)') {{existingLandmarks.displayValue}}
-      p(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayers' ng-click='getMapLayerSelectedMobile(layer)' ng-if='layer.modelValue !== "existingLandmarks" && layer.modelValue !== "existingHistoricDistricts"') {{layer.displayValue}}
+      p(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer' ng-click='getMapLayerSelectedMobile(layer)' ng-if='layer.modelValue !== "existingLandmarks" && layer.modelValue !== "existingHistoricDistricts"') {{layer.displayValue}}
 
   .zoom-out-buttons
     button.twoAndThree-button(title='The 2/3 Express train to Harlem! Click here to zoom to Harlem.' ng-click='zoomToHarlem()')
@@ -27,14 +27,14 @@ div(ng-controller='MapCtrl')
         p MAP LAYERS
     .map-layers-content
       .layers-choropleth-layers
-        .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayers')
+        .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayer')
           p {{layer.displayValue}}
           input(type='radio' name='choropleth' value='{{layer.modelValue}}' ng-model='selectedChroplethMapLayer' ng-click='turnOnChoroplethMapLayer(layer)' class='{{layer.modelValue}}')
       .layers-pointLinePolygonal-layers
         .map-layer
             p {{existingLandmarks.displayValue}}
             input(type='checkbox' name='{{existingLandmarks}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(existingLandmarks)')
-        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayers' ng-if='layer.modelValue !== "existingLandmarks" && layer.modelValue !== "existingHistoricDistricts"')
+        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer' ng-if='layer.modelValue !== "existingLandmarks" && layer.modelValue !== "existingHistoricDistricts"')
             p {{layer.displayValue}}
             input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)')
 
