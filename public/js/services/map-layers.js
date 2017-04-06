@@ -5,13 +5,13 @@ angular.module('shnApp')
             choroplethMapLayer: [{
                     displayValue: 'Development Potential',
                     modelValue: 'developmentPotential',
-                    layerSource: ['built_far_over_max_far', 'built_far', 'residential_far', 'commercial_far', 'facility_far', 'address', 'bbl'],
+                    layerSource: ['address', 'available_far', 'built_far', 'residential_far', 'commercial_far', 'commercial_far', 'facility_far', 'bbl'],
                 },
                 { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['landuse', 'address', 'bbl'] },
-                { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['zonedist1', 'address', 'bbl'] },
+                { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['address', 'zonedist1', 'bbl'] },
                 { displayValue: 'Plurality Group\'s Percent of Population', modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: [] },
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: [] },
-                { displayValue: 'Inappropriate Zoning', modelValue: 'inappropriateZoning', layerSource: ['built_far_over_max_far', 'built_far', 'residential_far', 'commercial_far', 'facility_far', 'address', 'bbl'] },
+                { displayValue: 'Inappropriate Zoning', modelValue: 'inappropriateZoning', layerSource: ['address', 'available_far', 'built_far', 'residential_far', 'commercial_far', 'facility_far',  'bbl'] },
             ],
             pointLinePolygonalMapLayer: [
                 { displayValue: 'Existing Landmarks', modelValue: 'existingLandmarks', layerSource: ['address', 'landmark_type', 'status', 'bbl', 'last_action', 'link_to_pdf_document'], layerType: 'pointLinePolygonal' },
