@@ -11,7 +11,7 @@ p {
 .map-layer div.cartodb-tiles-loader {
   display: none !important; }
 
-.card, .map-layers-holder .map-layers-title, .map-layers-holder .map-layers-content .layers-choropleth-layers, .map-layers-holder .map-layers-content .layers-pointLinePolygonal-layers {
+.card, .map-layers-holder .map-layers-title, .map-layers-holder .toggle-choropleth, .map-layers-holder .map-layers-content .layers-choropleth-layers, .map-layers-holder .map-layers-content .layers-pointLinePolygonal-layers {
   background: #FFF;
   box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.3);
   color: #1B2D41; }
@@ -83,6 +83,15 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center; }
+  .map-layers-holder .toggle-choropleth {
+    margin-top: 15px;
+    font-size: 14px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .map-layers-holder .toggle-choropleth md-switch {
+      margin: 0; }
   .map-layers-holder .map-layers-content {
     margin-top: 10px; }
     .map-layers-holder .map-layers-content .layers-choropleth-layers {

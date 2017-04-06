@@ -25,6 +25,11 @@ div(ng-controller='MapCtrl')
   .map-layers-holder
     .map-layers-title
         p MAP LAYERS
+    .toggle-choropleth
+      p Toggle Choropleth Layers
+      md-switch(ng-model='choroplethLayersVisibility' ng-click='enableChoroplethLayers(choroplethLayersVisibility)' aria-label='Toggle Choropleth Layers')
+
+
     .map-layers-content
       .layers-choropleth-layers
         .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayer')

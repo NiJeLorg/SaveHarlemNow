@@ -70,6 +70,18 @@ nav {
         justify-content: center;
         @extend .card;
     }
+    .toggle-choropleth {
+        margin-top: 15px;
+        font-size: 14px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @extend .card;
+        md-switch {
+            margin: 0;
+        }
+    }
     .map-layers-content {
         margin-top: 10px;
         .layers-choropleth-layers {

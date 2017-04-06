@@ -16,6 +16,8 @@ angular.module('shnApp')
             layerType: 'pointLinePolygonal'
         };
 
+        $scope.choroplethLayersVisibility = false;
+
 
         // ui interactions / event listeners
         $scope.zoomToHarlem = function() {
@@ -24,6 +26,18 @@ angular.module('shnApp')
 
         $scope.zoomToAllManhattan = function() {
             map.setView([40.776355, -73.959961], 12);
+        };
+
+        $scope.enableChoroplethLayers = function(state) {
+            if (!state) {
+                angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
+                    angular.element(this).attr('disabled', true);
+                });
+            } else {
+                angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
+                    angular.element(this).attr('disabled', false);
+                });
+            }
         };
 
         $scope.turnOnChoroplethMapLayer = function(layer) {
@@ -164,12 +178,6 @@ angular.module('shnApp')
                 });
             }
         }
-
-
-        // $('.overlay-content p').click(function() {
-        //     console.log('i might');
-        //     $('.overlay-content p').css('color', 'yellow');
-        // });
 
         function initMap() {
             var choroplethVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/dd3b212e-fdde-11e6-adbd-0e3ebc282e83/viz.json', 'choroplethMapLayer'],
