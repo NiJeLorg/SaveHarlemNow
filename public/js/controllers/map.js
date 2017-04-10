@@ -28,6 +28,8 @@ angular.module('shnApp')
             map.setView([40.776355, -73.959961], 12);
         };
 
+
+
         $scope.enableChoroplethLayers = function(state) {
             if (!state) {
                 angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
@@ -248,4 +250,9 @@ angular.module('shnApp')
         }
         showProjectInfoModalOnPageLoad();
         initMap();
+
+
+        angular.element(document).ready(function() {
+            console.log(angular.element('.map-container .cartodb-infowindow .cartodb-popup .cartodb-popup-content-wrapper .cartodb-popup-content'));
+        });
     });

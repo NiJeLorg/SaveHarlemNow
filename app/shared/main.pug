@@ -1,4 +1,71 @@
 div(ng-controller='MapCtrl')
+  script#existingLandmarks(type='infowindow/html')
+    .cartodb-popup.v2
+      .infowindow-custom
+        a.cartodb-popup-close-button.close(href='#close') x
+        div
+          .cartodb-popup-content-wrapper
+            .cartodb-popup-content
+              h4 LINK TO BUILDING IMAGE
+              p
+                a(href='{{content.data.link_to_building_image}}' target='_blank')
+                  img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto')
+            .cartodb-popup-content
+              h4 LANDMARK NAME
+              p {{content.data.landmark_name}}
+            .cartodb-popup-content
+              h4 LANDMARK PRESERVATION NUMBER
+              p {{content.data.landmark_preservation_number}}
+            .cartodb-popup-content
+              h4 ADDRESS
+              p {{content.data.address}}
+            .cartodb-popup-content
+              h4 LANDMARK TYPE
+              p {{content.data.landmark_type}}
+            .cartodb-popup-content
+              h4 STATUS
+              p {{content.data.status}}
+            .cartodb-popup-content
+              h4 CONSTRUCTION YEAR
+              p {{content.data.construction_year}}
+            .cartodb-popup-content
+              h4 BBL
+              p {{content.data.bbl}}
+            .cartodb-popup-content
+              h4 LINK TO PDF DOCUMENT
+              p
+                a(href='{{content.data.link_to_pdf_document}}' target='_blank') {{content.data.link_to_pdf_document}}
+      .cartodb-popup-tip-container
+
+  script#existingHistoricDistricts(type='infowindow/html')
+    .cartodb-popup.v2
+      .infowindow-custom
+        a.cartodb-popup-close-button.close(href='#close') x
+        div
+          .cartodb-popup-content-wrapper
+            .cartodb-popup-content
+              h4 LINK TO BUILDING IMAGE
+              p
+                a(href='{{content.data.link_to_building_image}}' target='_blank')
+                  img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto')
+            .cartodb-popup-content
+              h4 NAME
+              p {{content.data.name}}
+            .cartodb-popup-content
+              h4 LANDMARK PRESERVATION NUMBER
+              p {{content.data.landmark_preservation_number}}
+            .cartodb-popup-content
+              h4 DESIGNATION DATE
+              p {{content.data.designation_date}}
+            .cartodb-popup-content
+              h4 LINK TO PDF DOCUMENT
+              p
+                a(href='{{content.data.link_to_pdf_document}}' target='_blank') {{content.data.link_to_pdf_document}}
+      .cartodb-popup-tip-container
+
+
+
+
   .nav.info-nav
     i.fa.fa-info-circle.fa-2x(ng-click='showProjectInfoModal()')
   .nav.bars-nav
