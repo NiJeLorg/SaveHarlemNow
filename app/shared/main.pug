@@ -9,7 +9,7 @@ div(ng-controller='MapCtrl')
               h4 LINK TO BUILDING IMAGE
               p
                 a(href='{{content.data.link_to_building_image}}' target='_blank')
-                  img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto')
+                  img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto; width: 100%')
             .cartodb-popup-content
               h4 LANDMARK NAME
               p {{content.data.landmark_name}}
@@ -47,7 +47,7 @@ div(ng-controller='MapCtrl')
               h4 LINK TO BUILDING IMAGE
               p
                 a(href='{{content.data.link_to_building_image}}' target='_blank')
-                  img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto')
+                  img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto; width: 100%')
             .cartodb-popup-content
               h4 NAME
               p {{content.data.name}}
