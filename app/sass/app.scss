@@ -298,6 +298,18 @@ md-tabs md-ink-bar {
     }
 }
 
+@media (max-width: 1024px) {
+    .project-info-modal {
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-info-modal {
+        width: 70%;
+    }
+}
+
 @media (max-width: 425px) {
     .map-layers-holder {
         display: none;

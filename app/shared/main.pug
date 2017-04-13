@@ -92,9 +92,7 @@ div(ng-controller='MapCtrl')
   .map-layers-holder
     .map-layers-title
         p MAP LAYERS
-    .toggle-choropleth
-      p Toggle Choropleth Layers
-      md-switch(ng-model='choroplethLayersVisibility' ng-click='enableChoroplethLayers(choroplethLayersVisibility)' aria-label='Toggle Choropleth Layers')
+
 
 
     .map-layers-content
@@ -102,6 +100,9 @@ div(ng-controller='MapCtrl')
         .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayer')
           p {{layer.displayValue}}
           input(type='radio' name='choropleth' value='{{layer.modelValue}}' ng-model='selectedChroplethMapLayer' ng-click='turnOnChoroplethMapLayer(layer)' class='{{layer.modelValue}}')
+      .toggle-choropleth
+        p Turn off layers above
+        md-switch(ng-model='choroplethLayersVisibility' ng-click='enableChoroplethLayers(choroplethLayersVisibility)' aria-label='Toggle Choropleth Layers')
       .layers-pointLinePolygonal-layers
         .map-layer
             p {{existingLandmarks.displayValue}}

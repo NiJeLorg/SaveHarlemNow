@@ -260,6 +260,14 @@ md-tabs md-ink-bar {
   .legend .plurality-two-plus-bar {
     background: linear-gradient(90deg, #f7f7f7, #cccccc, #969696, #636363, #252525); }
 
+@media (max-width: 1024px) {
+  .project-info-modal {
+    width: 60%; } }
+
+@media (max-width: 768px) {
+  .project-info-modal {
+    width: 70%; } }
+
 @media (max-width: 425px) {
   .map-layers-holder {
     display: none; }
