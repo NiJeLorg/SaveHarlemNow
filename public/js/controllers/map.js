@@ -40,6 +40,7 @@ angular.module('shnApp')
                             allSubLayers[sublayer].forEach(function(layer, index) {
                                 layer[0].hide();
                                 angular.element('.legends-holder .choropleth-legend').remove();
+                                $('.layers-choropleth-layers .map-layer input').removeAttr('checked');
                             });
                         }
                     });
@@ -47,6 +48,7 @@ angular.module('shnApp')
             } else {
                 angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
                     angular.element(this).attr('disabled', false);
+
                 });
             }
         };
