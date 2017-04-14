@@ -30,6 +30,8 @@ angular.module('shnApp')
 
 
 
+
+
         $scope.enableChoroplethLayers = function(state) {
             if (!state) {
                 angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
@@ -39,16 +41,15 @@ angular.module('shnApp')
                         if (sublayer === 'choroplethMapLayer') {
                             allSubLayers[sublayer].forEach(function(layer, index) {
                                 layer[0].hide();
-                                angular.element('.legends-holder .choropleth-legend').remove();
-                                $('.layers-choropleth-layers .map-layer input').removeAttr('checked');
                             });
+                            angular.element('.layers-choropleth-layers .map-layer input').removeAttr('checked');
+                            angular.element('.legends-holder .choropleth-legend').remove();
                         }
                     });
                 });
             } else {
                 angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
                     angular.element(this).attr('disabled', false);
-
                 });
             }
         };
@@ -263,7 +264,4 @@ angular.module('shnApp')
         initMap();
 
 
-        angular.element(document).ready(function() {
-            console.log(angular.element('.map-container .cartodb-infowindow .cartodb-popup .cartodb-popup-content-wrapper .cartodb-popup-content'));
-        });
     });

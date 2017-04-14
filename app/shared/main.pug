@@ -63,6 +63,20 @@ div(ng-controller='MapCtrl')
                 a(href='{{content.data.link_to_pdf_document}}' target='_blank') {{content.data.link_to_pdf_document}}
       .cartodb-popup-tip-container
 
+  script#pluralityGroupsPercentOfPopulation(type='infowindow/html')
+    .cartodb-popup.v2
+      .infowindow-custom
+        a.cartodb-popup-close-button.close(href='#close') x
+        div
+          .cartodb-popup-content-wrapper
+            .cartodb-popup-content
+              h4 LARGEST RACIAL OR ETHINC GROUP
+              p(style='text-transform: capitalize') {{content.data.largest_racial_or_ethnic_group}}
+            .cartodb-popup-content
+              h4 PERCENT OF POPULATION
+              p.percentOfPopulation {{content.data.percent_of_population}}
+
+      .cartodb-popup-tip-container
 
 
 
