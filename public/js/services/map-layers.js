@@ -7,7 +7,7 @@ angular.module('shnApp')
                     modelValue: 'developmentPotential',
                     layerSource: ['address', 'available_far', 'built_far', 'residential_far', 'commercial_far', 'commercial_far', 'facility_far', 'bbl'],
                 },
-                { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['address', 'land_use', 'bbl'] },
+                { displayValue: 'Land Use', modelValue: 'landUse', layerSource: ['address', 'land_use_description', 'bbl'] },
                 { displayValue: 'Zoning', modelValue: 'zoning', layerSource: ['address', 'zoning_code', 'bbl'] },
                 { displayValue: 'Plurality Group\'s Percent of Population', modelValue: 'pluralityGroupsPercentOfPopulation', layerSource: ['largest_racial_or_ethnic_group', 'percent_of_population'] },
                 { displayValue: 'Landmark Rate', modelValue: 'landmarkRate', layerSource: ['number_of__landmarks', 'landmarks_per_1000_people'] },
