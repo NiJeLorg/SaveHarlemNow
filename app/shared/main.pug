@@ -10,32 +10,23 @@ div(ng-controller='MapCtrl')
               p
                 a(href='{{content.data.link_to_building_image}}' target='_blank')
                   img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto; width: 100%')
-            .cartodb-popup-content
               h4 LANDMARK NAME
               p {{content.data.landmark_name}}
-            .cartodb-popup-content
               h4 LANDMARK PRESERVATION NUMBER
               p {{content.data.landmark_preservation_number}}
-            .cartodb-popup-content
               h4 ADDRESS
               p {{content.data.address}}
-            .cartodb-popup-content
               h4 LANDMARK TYPE
               p {{content.data.landmark_type}}
-            .cartodb-popup-content
               h4 STATUS
               p {{content.data.status}}
-            .cartodb-popup-content
               h4 CONSTRUCTION YEAR
               p {{content.data.construction_year}}
-            .cartodb-popup-content
               h4 BBL
               p {{content.data.bbl}}
-            .cartodb-popup-content
               h4 LINK TO PDF DOCUMENT
               p
                 a(href='{{content.data.link_to_pdf_document}}' target='_blank') {{content.data.link_to_pdf_document}}
-      .cartodb-popup-tip-container
 
   script#existingHistoricDistricts(type='infowindow/html')
     .cartodb-popup.v2
@@ -48,20 +39,15 @@ div(ng-controller='MapCtrl')
               p
                 a(href='{{content.data.link_to_building_image}}' target='_blank')
                   img(src='{{content.data.link_to_building_image}}' width='80px' style='height: auto; width: 100%')
-            .cartodb-popup-content
               h4 NAME
               p {{content.data.name}}
-            .cartodb-popup-content
               h4 LANDMARK PRESERVATION NUMBER
               p {{content.data.landmark_preservation_number}}
-            .cartodb-popup-content
               h4 DESIGNATION DATE
               p {{content.data.designation_date}}
-            .cartodb-popup-content
               h4 LINK TO PDF DOCUMENT
               p
                 a(href='{{content.data.link_to_pdf_document}}' target='_blank') {{content.data.link_to_pdf_document}}
-      .cartodb-popup-tip-container
 
   script#pluralityGroupsPercentOfPopulation(type='infowindow/html')
     .cartodb-popup.v2
@@ -72,11 +58,9 @@ div(ng-controller='MapCtrl')
             .cartodb-popup-content
               h4 LARGEST RACIAL OR ETHINC GROUP
               p(style='text-transform: capitalize') {{content.data.largest_racial_or_ethnic_group}}
-            .cartodb-popup-content
               h4 PERCENT OF POPULATION
               p.percentOfPopulation {{content.data.percent_of_population}}
 
-      .cartodb-popup-tip-container
 
 
 
