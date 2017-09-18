@@ -29,9 +29,6 @@ angular.module('shnApp')
         };
 
 
-
-
-
         $scope.enableChoroplethLayers = function(state) {
             if (!state) {
                 angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {

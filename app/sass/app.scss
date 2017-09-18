@@ -83,13 +83,19 @@ nav {
         }
     }
     .map-layers-content {
-        margin-top: 10px;
+        .category-heading {
+            margin: 10px 0;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: bold;
+            background: #fff;
+            box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.3);
+        }
         .layers-choropleth-layers {
             @extend .card;
             padding: 0 10px;
         }
         .layers-pointLinePolygonal-layers {
-            margin-top: 15px;
             padding: 0 10px;
             @extend .card;
         }

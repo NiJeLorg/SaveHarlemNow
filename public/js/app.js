@@ -4,8 +4,5 @@ shnApp.config(['$urlRouterProvider', '$locationProvider', function($urlRouterPro
 
     $urlRouterProvider.otherwise('/');
 
-
     $locationProvider.html5Mode(true);
-
-
 }]);

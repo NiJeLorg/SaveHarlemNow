@@ -92,13 +92,17 @@ nav {
     align-items: center; }
     .map-layers-holder .toggle-choropleth md-switch {
       margin: 0; }
-  .map-layers-holder .map-layers-content {
-    margin-top: 10px; }
-    .map-layers-holder .map-layers-content .layers-choropleth-layers {
-      padding: 0 10px; }
-    .map-layers-holder .map-layers-content .layers-pointLinePolygonal-layers {
-      margin-top: 15px;
-      padding: 0 10px; }
+  .map-layers-holder .map-layers-content .category-heading {
+    margin: 10px 0;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+    background: #fff;
+    box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.3); }
+  .map-layers-holder .map-layers-content .layers-choropleth-layers {
+    padding: 0 10px; }
+  .map-layers-holder .map-layers-content .layers-pointLinePolygonal-layers {
+    padding: 0 10px; }
 
 .md-dialog-container {
   background: rgba(123, 125, 126, 0.7);
