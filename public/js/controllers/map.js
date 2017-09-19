@@ -15,8 +15,6 @@ angular.module('shnApp')
         //     layerType: 'pointLinePolygonal'
         // };
 
-        // $scope.choroplethLayersVisibility = false;
-
 
         // ui interactions / event listeners
         $scope.zoomToHarlem = function () {
@@ -38,8 +36,22 @@ angular.module('shnApp')
             } else {
                 if ($event.target.checked) {
                     selectedLayer.sublayer.show();
+                    if (selectedLayer.name === 'Existing Landmarks') {
+                        $scope.mapLayers.filter((layer, index) => {
+                            if (layer.name === 'Existing Historic Districts') {
+                                layer.sublayer.show();
+                            }
+                        });
+                    }
                 } else {
                     selectedLayer.sublayer.hide();
+                    if (selectedLayer.name === 'Existing Landmarks') {
+                        $scope.mapLayers.filter((layer, index) => {
+                            if (layer.name === 'Existing Historic Districts') {
+                                layer.sublayer.hide();
+                            }
+                        });
+                    }
                 }
             }
         };

@@ -98,7 +98,7 @@ div(ng-controller='MapCtrl')
           input(type='checkbox' ng-if='layer.layerType==="pointLinePolygonal"' ng-click='turnLayerOn(layer, $event)')
       P.category-heading INFORMATIONAL LAYERS
       .layers-pointLinePolygonal-layers
-        .map-layer(ng-repeat='layer in mapLayers' ng-if='layer.categoryType=="informational"')
+        .map-layer(ng-repeat='layer in mapLayers' ng-if='layer.categoryType=="informational" && layer.name !== "Existing Historic Districts"')
           p {{layer.name}}
           input(type='radio' name='choroplethLayerType' ng-if='layer.layerType==="choropleth"' ng-click='turnLayerOn(layer)' class='choroplethRadioButton')
           input(type='checkbox' ng-if='layer.layerType==="pointLinePolygonal"' ng-click='turnLayerOn(layer, $event)')
