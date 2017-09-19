@@ -85,7 +85,6 @@ div(ng-controller='MapCtrl')
 
 
   .legends-holder
-
   .map-container#map
   .map-layers-holder
     .map-layers-title
@@ -93,20 +92,20 @@ div(ng-controller='MapCtrl')
     .map-layers-content
       p.category-heading ANALYTICAL LAYERS
       .layers-choropleth-layers
-        .map-layer(ng-repeat='layer in mapLayers.choroplethMapLayer')
-          p {{layer.displayValue}}
-          input(type='radio' name='choropleth' value='{{layer.modelValue}}' ng-model='selectedChroplethMapLayer' ng-click='turnOnChoroplethMapLayer(layer)' class='{{layer.modelValue}}')
-      //- .toggle-choropleth
-      //-   p Turn off layers above
-      //-   md-switch(ng-model='choroplethLayersVisibility' ng-click='enableChoroplethLayers(choroplethLayersVisibility)' aria-label='Toggle Choropleth Layers')
+        .map-layer(ng-repeat='layer in mapLayers' ng-if='layer.categoryType=="analytical"')
+          p {{layer.name}}
+          input(type='radio' name='choroplethLayerType' ng-if='layer.layerType==="choropleth"' ng-click='turnLayerOn(layer)' class='choroplethRadioButton')
+          input(type='checkbox' ng-if='layer.layerType==="pointLinePolygonal"' ng-click='turnLayerOn(layer, $event)')
       P.category-heading INFORMATIONAL LAYERS
       .layers-pointLinePolygonal-layers
-        .map-layer
-            p {{existingLandmarks.displayValue}}
-            input(type='checkbox' name='{{existingLandmarks}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(existingLandmarks)')
-        .map-layer(ng-repeat='layer in mapLayers.pointLinePolygonalMapLayer' ng-if='layer.modelValue !== "existingLandmarks" && layer.modelValue !== "existingHistoricDistricts"')
-            p {{layer.displayValue}}
-            input(type='checkbox' name='{{layer}}' ng-model='selectedMapLayers[layer.modelValue]' ng-click='getMapLayerSelected(layer)')
+        .map-layer(ng-repeat='layer in mapLayers' ng-if='layer.categoryType=="informational"')
+          p {{layer.name}}
+          input(type='radio' name='choroplethLayerType' ng-if='layer.layerType==="choropleth"' ng-click='turnLayerOn(layer)' class='choroplethRadioButton')
+          input(type='checkbox' ng-if='layer.layerType==="pointLinePolygonal"' ng-click='turnLayerOn(layer, $event)')
+    .toggle-choropleth
+      p Turn Choropleth Layers off
+      md-switch(ng-model='choroplethLayersOn' ng-change='toggleChoroplethLayers(choroplethLayersOn)')
+
 
 
 

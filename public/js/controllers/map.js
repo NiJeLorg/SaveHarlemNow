@@ -1,144 +1,79 @@
 angular.module('shnApp')
-    .controller('MapCtrl', function($scope, $mdDialog, mapLayersData, legendDOMElements) {
+    .controller('MapCtrl', function ($scope, $mdDialog, mapLayersData, legendDOMElements) {
 
         // global variables
-        var cdb = window.cartodb,
-            allSubLayers = {},
+        let cdb = window.cartodb,
+            choroplethLayersOn = true,
             map;
 
 
         $scope.selectedMapLayers = {};
 
-        $scope.mapLayers = mapLayersData;
 
-        $scope.existingLandmarks = {
-            displayValue: 'Existing Landmarks',
-            layerType: 'pointLinePolygonal'
-        };
+        // $scope.existingLandmarks = {
+        //     displayValue: 'Existing Landmarks',
+        //     layerType: 'pointLinePolygonal'
+        // };
 
-        $scope.choroplethLayersVisibility = false;
+        // $scope.choroplethLayersVisibility = false;
 
 
         // ui interactions / event listeners
-        $scope.zoomToHarlem = function() {
+        $scope.zoomToHarlem = function () {
             map.setView([40.811550, -73.946477], 15);
         };
 
-        $scope.zoomToAllManhattan = function() {
+        $scope.zoomToAllManhattan = function () {
             map.setView([40.776355, -73.959961], 12);
         };
 
-
-        $scope.enableChoroplethLayers = function(state) {
-            if (!state) {
-                angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
-                    angular.element(this).attr('disabled', true);
-                    var mapLayers = Object.keys(allSubLayers);
-                    mapLayers.forEach(function(sublayer, index) {
-                        if (sublayer === 'choroplethMapLayer') {
-                            allSubLayers[sublayer].forEach(function(layer, index) {
-                                layer[0].hide();
-                            });
-                            angular.element('.layers-choropleth-layers .map-layer input').removeAttr('checked');
-                            angular.element('.legends-holder .choropleth-legend').remove();
-                        }
-                    });
+        $scope.turnLayerOn = (selectedLayer, $event) => {
+            if (selectedLayer.layerType === 'choropleth') {
+                $scope.mapLayers.filter((layer, index) => {
+                    if (layer.layerType === 'choropleth' && layer.name !== selectedLayer.name) {
+                        layer.sublayer.hide();
+                    }
+                    selectedLayer.sublayer.show();
                 });
             } else {
-                angular.element('.layers-choropleth-layers .map-layer input:radio').each(function() {
-                    angular.element(this).attr('disabled', false);
-                });
+                if ($event.target.checked) {
+                    selectedLayer.sublayer.show();
+                } else {
+                    selectedLayer.sublayer.hide();
+                }
             }
         };
 
-        $scope.turnOnChoroplethMapLayer = function(layer) {
-            var key = Object.keys(allSubLayers)[0];
-
-            allSubLayers[key].forEach(function(sublayer, index) {
-                if (sublayer[1] === layer.displayValue) {
-                    sublayer[0].show();
-                    if (angular.element('.legends-holder .choropleth-legend')) {
-                        angular.element('.legends-holder .choropleth-legend').remove();
-                        angular.element('.legends-holder').append(legendDOMElements[layer.modelValue]);
+        $scope.toggleChoroplethLayers = (state) => {
+            if (state) {
+                $('input:radio').attr('disabled', true)
+                    .prop('checked', false);
+                $scope.mapLayers.filter((layer, index) => {
+                    if (layer.layerType === 'choropleth') {
+                        layer.sublayer.hide();
                     }
-                } else {
-                    sublayer[0].hide();
-                }
-            });
-
+                })
+            } else {
+                $('input:radio').attr('disabled', false);
+            }
         };
 
-
-        $scope.getMapLayerSelected = function(layer) {
-            var prop,
-                key = layer.layerType + 'MapLayer',
-                arr = [{ modelValue: 'existingLandmarks', displayValue: 'Existing Landmarks' }, { modelValue: 'existingHistoricDistricts', displayValue: 'Existing Historic Districts' }];
-
-            function showMapLayer(layer) {
-                if (layer.displayValue !== 'Existing Landmarks') {
-                    allSubLayers[key].forEach(function(sublayer, index) {
-                        if (sublayer[1] === layer.displayValue) {
-                            sublayer[0].show();
-                            angular.element('.legends-holder').append(legendDOMElements[layer.modelValue]);
-                        }
-                    });
-                } else {
-                    arr.forEach(function(item, index) {
-                        allSubLayers[key].forEach(function(sublayer, index) {
-                            if (sublayer[1] === item.displayValue) {
-                                sublayer[0].show();
-                                angular.element('.legends-holder').append(legendDOMElements[item.modelValue]);
-                            }
-                        });
-                    });
-
-                }
-            }
-
-            function hideMapLayer(layer) {
-                if (layer.displayValue !== 'Existing Landmarks') {
-                    allSubLayers[key].forEach(function(sublayer, index) {
-                        if (sublayer[1] === layer.displayValue) {
-                            sublayer[0].hide();
-                            if (legendDOMElements[layer.modelValue]) {
-                                legendDOMElements[layer.modelValue].remove();
-                            }
-                        }
-                    });
-                } else {
-                    arr.forEach(function(item, index) {
-                        allSubLayers[key].forEach(function(sublayer, index) {
-                            if (sublayer[1] === item.displayValue) {
-                                sublayer[0].hide();
-                                if (legendDOMElements[item.modelValue]) {
-                                    legendDOMElements[item.modelValue].remove();
-                                }
-                            }
-                        });
-                    });
-                }
-            }
-
-            ($scope.selectedMapLayers[layer.modelValue] === true) ? showMapLayer(layer): hideMapLayer(layer);
-
-        };
-
-        $scope.showOverlayNavigation = function() {
+        $scope.showOverlayNavigation = function () {
             $('.overlay-nav').css('width', '100%');
             $('.overlay-nav .overlay-content p').css('opacity', '1');
         };
 
-        $scope.closeOverlayNavigation = function() {
+        $scope.closeOverlayNavigation = function () {
             $('.overlay-nav').css('width', '0');
             $('.overlay-nav .overlay-content p').css('opacity', '0');
         };
 
-        $scope.selectChoroplethMapLayerMobile = function(layer) {
+        $scope.selectChoroplethMapLayerMobile = function (layer) {
             $scope.turnOnChoroplethMapLayer(layer);
             $scope.closeOverlayNavigation();
         };
 
-        $scope.getMapLayerSelectedMobile = function(layer) {
+        $scope.getMapLayerSelectedMobile = function (layer) {
             if (layer.selectedOnMobile === true) {
                 $scope.selectedMapLayers[layer.modelValue] = false;
                 $scope.getMapLayerSelected(layer);
@@ -153,7 +88,7 @@ angular.module('shnApp')
 
 
         function ProjectInfoModalController($scope, $mdDialog) {
-            $scope.closeProjectInfoModal = function() {
+            $scope.closeProjectInfoModal = function () {
                 localStorage.closeProjectInfoModal = true;
                 $mdDialog.hide();
             };
@@ -163,7 +98,7 @@ angular.module('shnApp')
 
         }
 
-        $scope.showAboutInfoModal = function() {
+        $scope.showAboutInfoModal = function () {
             $mdDialog.show({
                 controller: AboutInfoModalController,
                 templateUrl: 'views/about-info-modal.html',
@@ -171,7 +106,7 @@ angular.module('shnApp')
             });
         };
 
-        $scope.showProjectInfoModal = function() {
+        $scope.showProjectInfoModal = function () {
             $mdDialog.show({
                 controller: ProjectInfoModalController,
                 templateUrl: 'views/project-info-modal.html',
@@ -191,9 +126,10 @@ angular.module('shnApp')
         }
 
         function initMap() {
-            var choroplethVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/dd3b212e-fdde-11e6-adbd-0e3ebc282e83/viz.json', 'choroplethMapLayer'],
-                pointLinePolygonalVizJSON = ['https://saveharlemnow.carto.com/api/v2/viz/4b650ba0-fde0-11e6-865d-0e3ebc282e83/viz.json', 'pointLinePolygonalMapLayer'];
-
+            const vizJSONs = {
+                choropleth: 'https://saveharlemnow.carto.com/api/v2/viz/dd3b212e-fdde-11e6-adbd-0e3ebc282e83/viz.json',
+                pointLinePolygonal: 'https://saveharlemnow.carto.com/api/v2/viz/4b650ba0-fde0-11e6-865d-0e3ebc282e83/viz.json'
+            };
 
             map = L.map('map', {
                 center: [40.811550, -73.946477],
@@ -207,58 +143,94 @@ angular.module('shnApp')
 
             map.addLayer(baseMapLayer);
 
-            function createCDBLayer(arr) {
-
-                arr.forEach(function(vizJSON, index) {
-
-                    cdb.createLayer(map, vizJSON[0], { legends: true })
-                        .addTo(map)
-                        .done(function(layer) {
-
-                            function storeSublayers() {
-                                allSubLayers[vizJSON[1]] = [];
-                                for (var i = 0; i < layer.getSubLayerCount(); i++) {
-                                    layer.getSubLayer(i).hide();
-                                    var sublayer = layer.getSubLayer(i);
-                                    allSubLayers[vizJSON[1]].push([sublayer]);
-                                }
+            function createCDBLayer(obj) {
+                let sublayers = [];
+                const makeSublayerNameIdFriendly = (name) => {
+                    let id = name.replace(/[\s']/g, '');
+                    id = name[0].toLowerCase() + name.slice(1);
+                    return id;
+                };
+                const returnLayerSource = (layerName) => {
+                    let layerSource;
+                    Object.keys(mapLayersData).forEach((key, index) => {
+                        mapLayersData[key].map((layer, index) => {
+                            if (layer.displayValue == layerName) {
+                                layerSource = layer.layerSource;
                             }
-
-                            storeSublayers();
-
-                            function mapSubLayers(obj) {
-                                var subLayerData = layer.getSubLayer(0),
-                                    subLayers = subLayerData._parent.layers;
-                                subLayers.forEach(function(sublayer, index) {
-                                    allSubLayers[vizJSON[1]][index][1] = sublayer.options.layer_name;
-                                });
-
-                                for (var key in obj) {
-                                    if (key === vizJSON[1]) {
-                                        allSubLayers[key].forEach(function(sublayer, index) {
-                                            for (var i = 0; i < obj[key].length; i++) {
-                                                if (sublayer[1] === obj[key][i].displayValue) {
-                                                    cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(index), obj[key][i].layerSource, {
-                                                        infowindowTemplate: $('#' + obj[key][i].modelValue).html(),
-                                                    });
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
+                        });
+                    });
+                    return layerSource;
+                };
+                const selectLayerType = (layerName) => {
+                    const layerTypes = {
+                        choropleth: ['Development Potential', 'Land Use', 'Zoning', 'Plurality Group\'s Percent of Population', 'Landmark Rate', 'Inappropriate Zoning'],
+                        pointLinePolygonal: ['Existing Landmarks', 'Proposed Landmarks', 'Landmarks At Risk', 'Existing Historic Districts', 'Proposed Historic Districts', 'Proposed Zoning Changes', 'NYC Community Board Districts', 'Subway Lines']
+                    };
+                    let layerType;
+                    Object.keys(layerTypes).forEach((key, index) => {
+                        layerTypes[key].map((layer, index) => {
+                            if (layer === layerName) {
+                                layerType = key;
                             }
+                        });
+                    });
+                    return layerType;
+                };
+                const selectCategoryType = (layerName) => {
+                    const categoryTypes = {
+                        analytical: ['Development Potential', 'Inappropriate Zoning', 'Landmark Rate', 'Landmarks At Risk', 'Proposed Landmarks', 'Proposed Zoning Changes'],
+                        informational: ['Existing Landmarks', 'Land Use', 'Zoning', 'Plurality Group\'s Percent of Population', 'NYC Community Board Districts', 'Subway Lines', 'Existing Historic Districts', 'Proposed Historic Districts']
+                    };
+                    let categoryType;
+                    Object.keys(categoryTypes).forEach((key, index) => {
+                        categoryTypes[key].map((layer, index) => {
+                            if (layer === layerName) {
+                                categoryType = key;
+                            }
+                        });
+                    });
+                    return categoryType;
+                };
 
-                            mapSubLayers($scope.mapLayers);
+                Object.keys(obj).forEach((key, index) => {
+                    cdb.createLayer(map, obj[key], {
+                            legends: true
                         })
-                        .error(function(err) {
+                        .addTo(map)
+                        .done((layer) => {
+                            let len = layer.getSubLayerCount(),
+                                firstSublayer = layer.getSubLayer(0),
+                                layerSublayers = firstSublayer._parent.layers;
+
+                            for (var i = 0; i < len; i++) {
+                                layer.getSubLayer(i).hide();
+                                let sublayer = layer.getSubLayer(i);
+                                sublayers.push({
+                                    sublayer: sublayer,
+                                    name: layerSublayers[i].options.layer_name,
+                                    id: makeSublayerNameIdFriendly(layerSublayers[i].options.layer_name),
+                                    layerSource: returnLayerSource(layerSublayers[i].options.layer_name),
+                                    layerType: selectLayerType(layerSublayers[i].options.layer_name),
+                                    categoryType: selectCategoryType(layerSublayers[i].options.layer_name),
+                                    position: i,
+                                });
+                            }
+                            $scope.mapLayers = sublayers;
+                            $scope.$apply();
+                            sublayers.map((sublayer, index) => {
+                                cdb.vis.Vis.addInfowindow(map, layer.getSubLayer(sublayer.position), sublayer.layerSource, {
+                                    infowindowTemplate: $('#' + sublayer.id).html(),
+                                });
+                            });
+                        })
+                        .error((err) => {
                             console.log(err);
                         });
                 });
+
             }
-            createCDBLayer([choroplethVizJSON, pointLinePolygonalVizJSON]);
+            createCDBLayer(vizJSONs);
         }
         showProjectInfoModalOnPageLoad();
         initMap();
-
-
     });
