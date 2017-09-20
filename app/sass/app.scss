@@ -93,10 +93,8 @@ nav {
         }
         .layers-choropleth-layers {
             @extend .card;
-            padding: 0 10px;
         }
         .layers-pointLinePolygonal-layers {
-            padding: 0 10px;
             @extend .card;
         }
     }

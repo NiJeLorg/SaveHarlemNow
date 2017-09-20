@@ -24,7 +24,12 @@ p {
   font-weight: 400;
   border-bottom: 0.5px solid rgba(151, 151, 151, 0.3);
   padding-top: 14px;
-  padding-bottom: 6px; }
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.choroplethLayer {
+  background: #f1f1f1; }
 
 body {
   margin: 0;
@@ -99,10 +104,6 @@ nav {
     font-weight: bold;
     background: #fff;
     box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.3); }
-  .map-layers-holder .map-layers-content .layers-choropleth-layers {
-    padding: 0 10px; }
-  .map-layers-holder .map-layers-content .layers-pointLinePolygonal-layers {
-    padding: 0 10px; }
 
 .md-dialog-container {
   background: rgba(123, 125, 126, 0.7);
