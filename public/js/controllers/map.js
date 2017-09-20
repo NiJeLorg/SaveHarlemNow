@@ -6,15 +6,23 @@ angular.module('shnApp')
             choroplethLayersOn = true,
             map;
 
+        const showSelectedLayerLegend = (layer) => {
+            $('.legends-holder').append(legendDOMElements[layer.id]);
+            if (layer.name === 'Existing Landmarks') {
+                $('.legends-holder').append(legendDOMElements['existingHistoricDistricts']);
+            }
+        };
+
+        const hideNonSelectedLayerLegend = (layer) => {
+            if (legendDOMElements[layer.id]) {
+                legendDOMElements[layer.id].remove();
+                if (layer.name === 'Existing Landmarks') {
+                    legendDOMElements['existingHistoricDistricts'].remove();
+                }
+            }
+        };
 
         $scope.selectedMapLayers = {};
-
-
-        // $scope.existingLandmarks = {
-        //     displayValue: 'Existing Landmarks',
-        //     layerType: 'pointLinePolygonal'
-        // };
-
 
         // ui interactions / event listeners
         $scope.zoomToHarlem = function () {
@@ -30,12 +38,15 @@ angular.module('shnApp')
                 $scope.mapLayers.filter((layer, index) => {
                     if (layer.layerType === 'choropleth' && layer.name !== selectedLayer.name) {
                         layer.sublayer.hide();
+                        hideNonSelectedLayerLegend(layer);
                     }
                     selectedLayer.sublayer.show();
+                    showSelectedLayerLegend(selectedLayer);
                 });
             } else {
                 if ($event.target.checked) {
                     selectedLayer.sublayer.show();
+                    showSelectedLayerLegend(selectedLayer);
                     if (selectedLayer.name === 'Existing Landmarks') {
                         $scope.mapLayers.filter((layer, index) => {
                             if (layer.name === 'Existing Historic Districts') {
@@ -45,6 +56,7 @@ angular.module('shnApp')
                     }
                 } else {
                     selectedLayer.sublayer.hide();
+                    hideNonSelectedLayerLegend(selectedLayer)
                     if (selectedLayer.name === 'Existing Landmarks') {
                         $scope.mapLayers.filter((layer, index) => {
                             if (layer.name === 'Existing Historic Districts') {
@@ -68,6 +80,7 @@ angular.module('shnApp')
             } else {
                 $('input:radio').attr('disabled', false);
             }
+            $('.legends-holder .choropleth-legend').remove();
         };
 
         $scope.showOverlayNavigation = function () {
@@ -105,18 +118,6 @@ angular.module('shnApp')
                 $mdDialog.hide();
             };
         }
-
-        function AboutInfoModalController($scope, $mdDialog) {
-
-        }
-
-        $scope.showAboutInfoModal = function () {
-            $mdDialog.show({
-                controller: AboutInfoModalController,
-                templateUrl: 'views/about-info-modal.html',
-                clickOutsideToClose: true,
-            });
-        };
 
         $scope.showProjectInfoModal = function () {
             $mdDialog.show({
@@ -158,9 +159,9 @@ angular.module('shnApp')
             function createCDBLayer(obj) {
                 let sublayers = [];
                 const makeSublayerNameIdFriendly = (name) => {
-                    let id = name.replace(/[\s']/g, '');
-                    id = name[0].toLowerCase() + name.slice(1);
-                    return id;
+                    name = name.replace(/[\s']/g, '');
+                    name = name[0].toLowerCase() + name.slice(1);
+                    return name;
                 };
                 const returnLayerSource = (layerName) => {
                     let layerSource;
