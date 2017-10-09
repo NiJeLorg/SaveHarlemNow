@@ -11,6 +11,9 @@ angular.module('shnApp')
             if (layer.name === 'Existing Landmarks') {
                 $('.legends-holder').append(legendDOMElements['existingHistoricDistricts']);
             }
+            if (layer.name === 'Proposed Landmarks') {
+                $('.legends-holder').append(legendDOMElements['proposedHistoricDistricts']);
+            }
         };
 
         const hideNonSelectedLayerLegend = (layer) => {
@@ -18,6 +21,9 @@ angular.module('shnApp')
                 legendDOMElements[layer.id].remove();
                 if (layer.name === 'Existing Landmarks') {
                     legendDOMElements['existingHistoricDistricts'].remove();
+                }
+                if (layer.name === 'Proposed Landmarks') {
+                    legendDOMElements['proposedHistoricDistricts'].remove();
                 }
             }
         };
@@ -54,12 +60,26 @@ angular.module('shnApp')
                             }
                         });
                     }
+                    if (selectedLayer.name === 'Proposed Landmarks') {
+                        $scope.mapLayers.filter((layer, index) => {
+                            if (layer.name === 'Proposed Historic Districts') {
+                                layer.sublayer.show();
+                            }
+                        });
+                    }
                 } else {
                     selectedLayer.sublayer.hide();
                     hideNonSelectedLayerLegend(selectedLayer)
                     if (selectedLayer.name === 'Existing Landmarks') {
                         $scope.mapLayers.filter((layer, index) => {
                             if (layer.name === 'Existing Historic Districts') {
+                                layer.sublayer.hide();
+                            }
+                        });
+                    }
+                    if (selectedLayer.name === 'Proposed Landmarks') {
+                        $scope.mapLayers.filter((layer, index) => {
+                            if (layer.name === 'Proposed Historic Districts') {
                                 layer.sublayer.hide();
                             }
                         });
